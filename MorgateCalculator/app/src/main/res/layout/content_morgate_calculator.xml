@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#E7E7E7"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_morgate_calculator"
+    tools:context=".MorgateCalculatorActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/home_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home Value"
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <EditText
+            android:id="@+id/home_value_edit_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="$"
+            android:paddingLeft="16dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/box"
+            android:layout_marginBottom="10dp"
+            android:layout_alignBottom="@+id/home_value_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/down_payment_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:text="Dow Payment"/>
+
+            />
+
+        <EditText
+            android:id="@+id/down_payment_edit_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="$"
+            android:paddingLeft="16dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/box"
+            android:layout_alignBottom="@+id/down_payment_text_view"/>
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/interest_rate_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:text="Interest Rate"/>
+
+            />
+
+        <EditText
+            android:id="@+id/interest_rate_edit_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="%"
+            android:paddingLeft="16dp"
+            android:layout_marginLeft="48dp"
+            android:background="@drawable/box"
+            android:layout_marginBottom="10dp"
+            android:layout_alignBottom="@+id/interest_rate_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/term_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:text="Term"
+            android:textStyle="bold"
+
+            />
+
+        <Spinner
+            android:id="@+id/term_edit_text"
+
+
+            android:layout_width="195dp"
+            android:layout_height="26dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+
+            android:layout_marginLeft="98dp"
+            android:background="@drawable/box"
+            android:spinnerMode="dropdown"
+            android:layout_alignBottom="@+id/term_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/property_tax_rate_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:text="Property Tax Rate"
+
+            />
+
+        <EditText
+            android:id="@+id/property_tax_rate_edit_text"
+
+
+            android:layout_width="195dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_marginLeft="18dp"
+            android:background="@drawable/box"
+            android:hint="%"
+            android:paddingLeft="16dp"
+            android:layout_alignBottom="@+id/property_tax_rate_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <Button
+            android:id="@+id/calculator_button"
+
+            android:text="Calculate"
+            android:textColor="#F2FFE8"
+            android:textSize="15sp"
+
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/calculate_button"
+
+
+            android:layout_marginLeft="95dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            />
+        <Button
+            android:id="@+id/reset_button"
+
+            android:text="Reset"
+            android:textColor="#F2FFE8"
+            android:textSize="15sp"
+
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/calculate_button"
+            android:layout_marginTop="16dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment"
+        android:textSize="32dp"
+        android:textColor="#0099FF"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/money_payment_amount_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monthly Payment "
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <EditText
+            android:id="@+id/money_payment_amount_edit_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="$"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="16dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/box"
+            android:layout_marginBottom="10dp"
+            android:layout_alignBottom="@+id/money_payment_amount_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/interest_paid_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:text="Interest Paid"/>
+
+        />
+
+        <EditText
+            android:id="@+id/interest_paid_edit_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="$"
+            android:paddingLeft="16dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/box"
+            android:layout_alignBottom="@+id/interest_paid_text_view"/>
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/property_tax_paid_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:textStyle="bold"
+            android:text="Property Tax Paid"/>
+
+        />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_marginLeft="14dp"
+            android:background="@drawable/box"
+            android:layout_marginBottom="10dp"
+            android:hint="$"
+            android:paddingLeft="16dp"
+            android:layout_alignBottom="@+id/property_tax_paid_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/pay_off_date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000779"
+            android:text="Pay Off Date"
+            android:textStyle="bold"
+
+            />
+
+        <EditText
+            android:id="@+id/pay_off_date_edit_text"
+
+            android:inputType="number"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:layout_marginLeft="48dp"
+            android:background="@drawable/box"
+            android:paddingLeft="16dp"
+            android:layout_alignBottom="@+id/pay_off_date_text_view"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+
+</LinearLayout>
