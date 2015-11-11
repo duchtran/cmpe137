@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.util.Log;
 
 public class MorgateCalculatorActivity extends AppCompatActivity {
     private EditText mHomeValueEditText;
@@ -21,6 +22,9 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
     private Button mResetButton;
     private Button mCalculatorButton;
     private EditText mMoneyPaymentEditText;
+    private EditText mInterestPaid;
+    private EditText mTaxPaid;
+    private EditText mPayOffDate;
     private Calculator mCalculator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,11 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
         String [] items = new String []{"Choose Term in Years","15", "20", "30"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         mTermEditText.setAdapter(adapter);
+        mMoneyPaymentEditText = (EditText) findViewById(R.id.money_payment_amount_edit_text);
+        mInterestPaid = (EditText) findViewById(R.id.interest_paid_edit_text);
+        mTaxPaid = (EditText) findViewById(R.id.tax_paid_edit_text);
+        mPayOffDate = (EditText) findViewById(R.id.pay_off_date_edit_text);
+
 //        mTermEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -59,16 +68,37 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
         mCalculatorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-               String homeValueString= mHomeValueEditText.getText().toString();
-               double homeValueDouble = Double.parseDouble(homeValueString) ;
-               String downPaymentString = mDowPaymentEditText.getText().toString();
-               double downPaymentDouble = Double.parseDouble(downPaymentString);
-               String interestRateString = mInterestRateEditText.getText().toString();
-               double interestRateDouble = Double.parseDouble(interestRateString);
+                String homeValueString= mHomeValueEditText.getText().toString();
+                double homeValueDouble = Double.parseDouble(homeValueString) ;
+                String downPaymentString = mDowPaymentEditText.getText().toString();
+                double downPaymentDouble = Double.parseDouble(downPaymentString);
+                String interestRateString = mInterestRateEditText.getText().toString();
+                double interestRateDouble = Double.parseDouble(interestRateString);
+                String propertyTaxRateString = mPropertyTaxRate.getText().toString();
+                double propertyTaxRateDouble = Double.parseDouble(propertyTaxRateString);
+                double term;
+                switch (mTermEditText.getSelectedItem().toString()){
+                    case "15":
+                        term = 15;
+                        break;
+                    case "20":
+                        term = 20;
+                        break;
+                    case "30":
+                        term = 30;
+                        break;
+                    default:
+                        term = 0;
+                        break;
+                }
 
+                //Log.v("debug",homeValueDouble + "\n" + downPaymentDouble + "\n" + interestRateDouble + "\n" + term + "\n" + propertyTaxRateDouble);
 
+                mCalcuator.init(homeValueDouble, downPaymentDouble, interestRateDouble / 100 / 12, term, propertyTaxRateDouble / 100 / 12);
 
-
+                mMoneyPaymentEditText.setText(String.valueOf(mCalcuator.calculateMonthlyPayment()));
+                mInterestPaid.setText(String.valueOf(mCalcuator.calculateTotalInterestPaid()));
+                mTaxPaid.setText(String.valueOf(mCalcuator.calculateTotalTaxPaid()));
             }
         });
 

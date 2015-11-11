@@ -280,6 +280,7 @@
         />
 
         <EditText
+            android:id="@+id/tax_paid_edit_text"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="number"

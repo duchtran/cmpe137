@@ -1,5 +1,7 @@
 package com.aitruong.morgatecalculator;
 
+import android.util.Log;
+
 /**
  * Created by mina on 11/3/15.
  */
@@ -9,7 +11,6 @@ public class Calculator {
     private double mInterestRate;
     private double mTerm;
     private double mPropertyTaxRate;
-    private double mMoneyPayment;
 
     public Calculator (double aHomeValue,double aDowpayment,double anInterestRate,double aTerm,double aPropertyTaxRate){
         mHomeValue = aHomeValue;
@@ -17,12 +18,17 @@ public class Calculator {
         mInterestRate = anInterestRate;
         mTerm = aTerm;
         mPropertyTaxRate = aPropertyTaxRate;
-
-
-
     }
     public Calculator(){
 
+    }
+
+    public void init(double aHomeValue,double aDowpayment,double anInterestRate,double aTerm,double aPropertyTaxRate){
+        mHomeValue = aHomeValue;
+        mDowPayment = aDowpayment;
+        mInterestRate = anInterestRate;
+        mTerm = aTerm;
+        mPropertyTaxRate = aPropertyTaxRate;
     }
 
     public double getHomeValue() {
@@ -65,11 +71,29 @@ public class Calculator {
         mPropertyTaxRate = propertyTaxRate;
     }
 
-    public double calculateMonthlyPayment(){
-    double numPayment = mTerm * 12;
-       mMoneyPayment =mHomeValue *((mInterestRate*(Math.pow((1 + mInterestRate), numPayment)))/(Math.pow((1 + mInterestRate), numPayment))-1);
-     return mMoneyPayment;
+    public double calculateNumPayment(){
+        return  mTerm * 12;
     }
 
+    public double calculateMonthlyPayment(){
+        double mMoneyPayment;
+        mMoneyPayment = (mHomeValue - mDowPayment) *((mInterestRate*(Math.pow((1 + mInterestRate), calculateNumPayment())))/
+                (Math.pow((1 + mInterestRate), calculateNumPayment())-1));
+        Log.v("debug","debug:" + (Math.pow((1 + mInterestRate), calculateNumPayment())));
+        mMoneyPayment += calculateTotalTaxPaid() / calculateNumPayment();
+        return mMoneyPayment;
+    }
+
+    public double calculateTotalPaid(){
+        return calculateMonthlyPayment() * calculateNumPayment();
+    }
+
+    public double calculateTotalInterestPaid(){
+        return calculateTotalPaid() - calculateTotalTaxPaid() - (mHomeValue - mDowPayment);
+    }
+
+    public double calculateTotalTaxPaid(){
+        return mHomeValue * mPropertyTaxRate * calculateNumPayment();
+    }
 
 }
