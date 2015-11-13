@@ -117,6 +117,10 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
         mDowPaymentEditText.setText("");
         mPropertyTaxRate.setText("");
         mInterestRateEditText.setText("");
+	 mMoneyPaymentEditText.setText("");
+        mInterestPaid.setText("");
+        mTaxPaid.setText("");
+        mPayOffDate.setText("");
 
       }
 
