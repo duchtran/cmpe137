@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.util.Log;
+import java.text.SimpleDateFormat;
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MorgateCalculatorActivity extends AppCompatActivity {
     private EditText mHomeValueEditText;
@@ -77,6 +81,7 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
                 String propertyTaxRateString = mPropertyTaxRate.getText().toString();
                 double propertyTaxRateDouble = Double.parseDouble(propertyTaxRateString);
                 double term;
+
                 switch (mTermEditText.getSelectedItem().toString()){
                     case "15":
                         term = 15;
@@ -91,14 +96,16 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
                         term = 0;
                         break;
                 }
-
+                Calendar c = Calendar.getInstance();
+                int payYear = c.get(Calendar.YEAR) + (int)term;
+                String payMonth = getMonthShortName(c.get(Calendar.MONTH));
                 //Log.v("debug",homeValueDouble + "\n" + downPaymentDouble + "\n" + interestRateDouble + "\n" + term + "\n" + propertyTaxRateDouble);
 
                 mCalcuator.init(homeValueDouble, downPaymentDouble, interestRateDouble / 100 / 12, term, propertyTaxRateDouble / 100 / 12);
-
-                mMoneyPaymentEditText.setText(String.valueOf(mCalcuator.calculateMonthlyPayment()));
-                mInterestPaid.setText(String.valueOf(mCalcuator.calculateTotalInterestPaid()));
-                mTaxPaid.setText(String.valueOf(mCalcuator.calculateTotalTaxPaid()));
+                mMoneyPaymentEditText.setText(String.format("%.2f", mCalcuator.calculateMonthlyPayment()));
+                mInterestPaid.setText(String.format("%.2f", mCalcuator.calculateTotalInterestPaid()));
+                mTaxPaid.setText(String.format("%.2f", mCalcuator.calculateTotalTaxPaid()));
+                mPayOffDate.setText(String.valueOf(payMonth + " " + payYear));
             }
         });
 
@@ -117,15 +124,34 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
         mDowPaymentEditText.setText("");
         mPropertyTaxRate.setText("");
         mInterestRateEditText.setText("");
-	 mMoneyPaymentEditText.setText("");
+        mMoneyPaymentEditText.setText("");
         mInterestPaid.setText("");
         mTaxPaid.setText("");
         mPayOffDate.setText("");
-
       }
 
 
+    public static String getMonthShortName(int monthNumber)
+    {
+        String monthName="";
 
+        if(monthNumber>=0 && monthNumber<12)
+            try
+            {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.MONTH, monthNumber);
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM");
+                simpleDateFormat.setCalendar(calendar);
+                monthName = simpleDateFormat.format(calendar.getTime());
+            }
+            catch (Exception e)
+            {
+                if(e!=null)
+                    e.printStackTrace();
+            }
+        return monthName;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
