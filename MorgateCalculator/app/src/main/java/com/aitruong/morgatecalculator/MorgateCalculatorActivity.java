@@ -72,40 +72,51 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
         mCalculatorButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String homeValueString= mHomeValueEditText.getText().toString();
-                double homeValueDouble = Double.parseDouble(homeValueString) ;
-                String downPaymentString = mDowPaymentEditText.getText().toString();
-                double downPaymentDouble = Double.parseDouble(downPaymentString);
-                String interestRateString = mInterestRateEditText.getText().toString();
-                double interestRateDouble = Double.parseDouble(interestRateString);
-                String propertyTaxRateString = mPropertyTaxRate.getText().toString();
-                double propertyTaxRateDouble = Double.parseDouble(propertyTaxRateString);
-                double term;
+                if("".equals(mHomeValueEditText.getText().toString())
+                        |"".equals( mDowPaymentEditText.getText().toString())
+                        |"".equals(mInterestRateEditText.getText().toString())
+                        |"".equals(mPropertyTaxRate.getText().toString())) {
+                    mMoneyPaymentEditText.setText("Missing Entries");
+                } else {
+                    String homeValueString = mHomeValueEditText.getText().toString();
+                    double homeValueDouble = Double.parseDouble(homeValueString);
+                    String downPaymentString = mDowPaymentEditText.getText().toString();
+                    double downPaymentDouble = Double.parseDouble(downPaymentString);
+                    String interestRateString = mInterestRateEditText.getText().toString();
+                    double interestRateDouble = Double.parseDouble(interestRateString);
+                    String propertyTaxRateString = mPropertyTaxRate.getText().toString();
+                    double propertyTaxRateDouble = Double.parseDouble(propertyTaxRateString);
+                    double term;
 
-                switch (mTermEditText.getSelectedItem().toString()){
-                    case "15":
-                        term = 15;
-                        break;
-                    case "20":
-                        term = 20;
-                        break;
-                    case "30":
-                        term = 30;
-                        break;
-                    default:
-                        term = 0;
-                        break;
+                    switch (mTermEditText.getSelectedItem().toString()) {
+                        case "15":
+                            term = 15;
+                            break;
+                        case "20":
+                            term = 20;
+                            break;
+                        case "30":
+                            term = 30;
+                            break;
+                        default:
+                            term = 0;
+                            break;
+                    }
+                    Calendar c = Calendar.getInstance();
+                    int payYear = c.get(Calendar.YEAR) + (int) term;
+                    String payMonth = getMonthShortName(c.get(Calendar.MONTH));
+                    //Log.v("debug",homeValueDouble + "\n" + downPaymentDouble + "\n" + interestRateDouble + "\n" + term + "\n" + propertyTaxRateDouble);
+
+                    mCalcuator.init(homeValueDouble, downPaymentDouble, interestRateDouble / 100 / 12, term, propertyTaxRateDouble / 100 / 12);
+                    if (errorHandler(mCalcuator.calculateTotalInterestPaid(), mCalcuator.calculateMonthlyPayment())) {
+                        mMoneyPaymentEditText.setText(String.format("%.2f", mCalcuator.calculateMonthlyPayment()));
+                        mInterestPaid.setText(String.format("%.2f", mCalcuator.calculateTotalInterestPaid()));
+                        mTaxPaid.setText(String.format("%.2f", mCalcuator.calculateTotalTaxPaid()));
+                        mPayOffDate.setText(String.valueOf(payMonth + " " + payYear));
+                    } else {
+                        mMoneyPaymentEditText.setText("Invalid Entries");
+                    }
                 }
-                Calendar c = Calendar.getInstance();
-                int payYear = c.get(Calendar.YEAR) + (int)term;
-                String payMonth = getMonthShortName(c.get(Calendar.MONTH));
-                //Log.v("debug",homeValueDouble + "\n" + downPaymentDouble + "\n" + interestRateDouble + "\n" + term + "\n" + propertyTaxRateDouble);
-
-                mCalcuator.init(homeValueDouble, downPaymentDouble, interestRateDouble / 100 / 12, term, propertyTaxRateDouble / 100 / 12);
-                mMoneyPaymentEditText.setText(String.format("%.2f", mCalcuator.calculateMonthlyPayment()));
-                mInterestPaid.setText(String.format("%.2f", mCalcuator.calculateTotalInterestPaid()));
-                mTaxPaid.setText(String.format("%.2f", mCalcuator.calculateTotalTaxPaid()));
-                mPayOffDate.setText(String.valueOf(payMonth + " " + payYear));
             }
         });
 
@@ -174,4 +185,13 @@ public class MorgateCalculatorActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public boolean errorHandler(double tempTotalInterestPaid, double tempcalculateMonthlyPayment) {
+        if ((String.valueOf(tempTotalInterestPaid).equals("NaN")) | (String.valueOf(tempcalculateMonthlyPayment).equals("NaN"))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }
