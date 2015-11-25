@@ -20,7 +20,7 @@ import com.facebook.login.widget.LoginButton;
 public class ElbrusActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton fbLoginButton;
-
+    //Test
     public final ElbrusActivity thisActivity = this;
     private Data data;
 
