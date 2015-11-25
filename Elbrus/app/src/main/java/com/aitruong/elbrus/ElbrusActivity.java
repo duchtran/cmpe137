@@ -20,12 +20,17 @@ import com.facebook.login.widget.LoginButton;
 public class ElbrusActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton fbLoginButton;
+
+    public final static String MESSAGE_USER_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_USER_ID";
+    public final ElbrusActivity thisActivity = this;
+
+    private Data data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //ActionBar actionBar = getActionBar();
-        //actionBar.hide();
+        data = (Data)getApplication();
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -54,6 +59,14 @@ public class ElbrusActivity extends AppCompatActivity {
 //                System.out.println("User ID  : " + loginResult.getAccessToken().getUserId());
 //                System.out.println("Authentication Token : " + loginResult.getAccessToken().getToken());
 //                Toast.makeText(ElbrusActivity.this, "Login Successful!", Toast.LENGTH_LONG).show();
+
+                //set user ID
+                data.setUserID("0000");
+                data.setUserName("Name");
+
+                Intent intent = new Intent(thisActivity,AlbumActivity.class);
+                startActivity(intent);
+
             }
 
             @Override

@@ -10,4 +10,11 @@
     tools:showIn="@layout/activity_photo_detail"
     tools:context="com.aitruong.elbrus.PhotoDetailActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notes:"
+        android:id="@+id/photoDescription"
+        android:textSize="30dp" />
+
 </RelativeLayout>

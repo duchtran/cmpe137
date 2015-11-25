@@ -1,5 +1,6 @@
 package com.aitruong.elbrus;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import java.util.HashMap;
 public class AlbumDetailActivity extends AppCompatActivity {
 
     final AlbumDetailActivity thisActivity=this;
+    public final static String MESSAGE_PHOTO_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_PHOTO_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +30,18 @@ public class AlbumDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        String albumID = intent.getStringExtra(AlbumActivity.MESSAGE_ALBUM_ID);
+        TextView description = (TextView) findViewById(R.id.albumDescription);
+        description.setText(albumID + "'s photo: description");
+
         GridView gridview = (GridView) findViewById(R.id.photoGridView);
 
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<10;i++)
         {
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
+            map.put("ItemImage", R.drawable.ic_photo_black_24dp);
             map.put("ItemText", "NO."+String.valueOf(i));
             lstImageItem.add(map);
         }
@@ -51,6 +59,8 @@ public class AlbumDetailActivity extends AppCompatActivity {
                                     long arg3//row id
             ) {
                 Intent intent = new Intent(thisActivity, PhotoDetailActivity.class);
+                String message = new String("No." + arg2+ " ");
+                intent.putExtra(MESSAGE_PHOTO_ID,message);
                 startActivity(intent);
             }
         });

@@ -1,5 +1,6 @@
 package com.aitruong.elbrus;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +19,9 @@ import java.util.HashMap;
 public class AlbumActivity extends AppCompatActivity {
 
     final AlbumActivity thisActivity=this;
+    public final static String MESSAGE_ALBUM_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_ALBUM_ID";
+
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,12 @@ public class AlbumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_album);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        data = (Data)getApplication();
+
+        Intent intent = getIntent();
+        TextView description = (TextView) findViewById(R.id.userDescription);
+        description.setText(data.getUserName() + "'s Album");
 
         GridView gridview = (GridView) findViewById(R.id.albumGridView);
 
@@ -49,6 +60,9 @@ public class AlbumActivity extends AppCompatActivity {
                                     long arg3//row id
             ) {
                 Intent intent = new Intent(thisActivity,AlbumDetailActivity.class);
+                //for test
+                String message = new String(arg2 + ":" + arg3);
+                intent.putExtra(MESSAGE_ALBUM_ID,message);
                 startActivity(intent);
             }
         });
