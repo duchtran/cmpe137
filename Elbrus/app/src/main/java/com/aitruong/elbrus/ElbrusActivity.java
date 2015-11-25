@@ -20,25 +20,17 @@ import com.facebook.login.widget.LoginButton;
 public class ElbrusActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton fbLoginButton;
-
-    public final static String MESSAGE_USER_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_USER_ID";
-    public final ElbrusActivity thisActivity = this;
-
-    private Data data;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        data = (Data)getApplication();
+        //ActionBar actionBar = getActionBar();
+        //actionBar.hide();
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-
-        setContentView(R.layout.activity_elbrus);
-
-
         callbackManager = CallbackManager.Factory.create();
 
+        setContentView(R.layout.activity_elbrus);
 
 
         fbLoginButton = (LoginButton)findViewById(R.id.login_button);
@@ -53,25 +45,20 @@ public class ElbrusActivity extends AppCompatActivity {
 
                 Toast.makeText(ElbrusActivity.this, "Login successfull!", Toast.LENGTH_LONG).show();
 
+
+
 //                System.out.println("Facebook Login Successful!");
 //                System.out.println("Logged in user Details : ");
 //                System.out.println("--------------------------");
 //                System.out.println("User ID  : " + loginResult.getAccessToken().getUserId());
 //                System.out.println("Authentication Token : " + loginResult.getAccessToken().getToken());
 //                Toast.makeText(ElbrusActivity.this, "Login Successful!", Toast.LENGTH_LONG).show();
-
-                //set user ID
-                data.setUserID("0000");
-                data.setUserName("Name");
-
-                Intent intent = new Intent(thisActivity,AlbumActivity.class);
-                startActivity(intent);
-
             }
 
             @Override
             public void onCancel() {
                 Toast.makeText(ElbrusActivity.this, "Login cancelled by user!", Toast.LENGTH_LONG).show();
+                
 
             }
 
@@ -88,6 +75,8 @@ public class ElbrusActivity extends AppCompatActivity {
     protected void onActivityResult(int reqCode, int resCode, Intent i) {
 
         callbackManager.onActivityResult(reqCode, resCode, i);
+
+
     }
 
 
@@ -117,4 +106,6 @@ public class ElbrusActivity extends AppCompatActivity {
         Intent intent = new Intent(this,AlbumActivity.class);
         startActivity(intent);
     }
+
+
 }
