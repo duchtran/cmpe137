@@ -18,10 +18,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AlbumDetailActivity extends AppCompatActivity {
+public class AlbumDetailActivity extends AppCompatActivity{
 
     final AlbumDetailActivity thisActivity=this;
     public final static String MESSAGE_PHOTO_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_PHOTO_ID";
+
+    private ArrayList<HashMap<String, Object>> lstImageItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +32,16 @@ public class AlbumDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //show description
         Intent intent = getIntent();
         String albumID = intent.getStringExtra(AlbumActivity.MESSAGE_ALBUM_ID);
         TextView description = (TextView) findViewById(R.id.albumDescription);
         description.setText(albumID + "'s photo: description");
 
+        //show photos
         GridView gridview = (GridView) findViewById(R.id.photoGridView);
 
+        //init data for test
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<10;i++)
         {
@@ -52,6 +57,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
                 new int[] {R.id.ItemImage,R.id.ItemText});
         gridview.setAdapter(saImageItems);
 
+        //set listener
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0,
                                     View arg1,
@@ -59,7 +65,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
                                     long arg3//row id
             ) {
                 Intent intent = new Intent(thisActivity, PhotoDetailActivity.class);
-                String message = new String("No." + arg2+ " ");
+                String message = "No." + arg2;
                 intent.putExtra(MESSAGE_PHOTO_ID,message);
                 startActivity(intent);
             }

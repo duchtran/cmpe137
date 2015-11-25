@@ -20,12 +20,15 @@ import com.facebook.login.widget.LoginButton;
 public class ElbrusActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton fbLoginButton;
+
+    public final ElbrusActivity thisActivity = this;
+    private Data data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //ActionBar actionBar = getActionBar();
-        //actionBar.hide();
+        data = (Data)getApplication();
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -45,7 +48,12 @@ public class ElbrusActivity extends AppCompatActivity {
 
                 Toast.makeText(ElbrusActivity.this, "Login successfull!", Toast.LENGTH_LONG).show();
 
+                //set user ID
+                data.setUserID("0000");
+                data.setUserName("Name");
 
+                Intent intent = new Intent(thisActivity,AlbumActivity.class);
+                startActivity(intent);
 
 //                System.out.println("Facebook Login Successful!");
 //                System.out.println("Logged in user Details : ");

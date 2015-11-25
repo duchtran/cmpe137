@@ -16,12 +16,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AlbumActivity extends AppCompatActivity {
+public class AlbumActivity extends AppCompatActivity{
 
     final AlbumActivity thisActivity=this;
     public final static String MESSAGE_ALBUM_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_ALBUM_ID";
 
     private Data data;
+    private GridView mGridView;
+    private ArrayList<HashMap<String, Object>> lstImageItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +34,15 @@ public class AlbumActivity extends AppCompatActivity {
 
         data = (Data)getApplication();
 
+        //show description
         TextView description = (TextView) findViewById(R.id.userDescription);
         description.setText(data.getUserName() + "'s Album");
 
-        GridView gridview = (GridView) findViewById(R.id.albumGridView);
+        //show albums
+        mGridView = (GridView) findViewById(R.id.albumGridView);
 
-        ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
+        //init data for test
+        lstImageItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<10;i++)
         {
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -50,9 +55,10 @@ public class AlbumActivity extends AppCompatActivity {
                 R.layout.grid_item,
                 new String[] {"ItemImage","ItemText"},
                 new int[] {R.id.ItemImage,R.id.ItemText});
-        gridview.setAdapter(saImageItems);
+        mGridView.setAdapter(saImageItems);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        //set listener
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> arg0,
                                     View arg1,
                                     int arg2,//position

@@ -27,8 +27,8 @@ public class Data extends Application{
 
     @Override
     public void onCreate(){
-        userID = "ID";
-        userName = "Name";
+        userID = "NoID";
+        userName = "NoName";
         super.onCreate();
     }
 }
