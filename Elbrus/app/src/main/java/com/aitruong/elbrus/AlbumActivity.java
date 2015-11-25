@@ -32,7 +32,6 @@ public class AlbumActivity extends AppCompatActivity {
 
         data = (Data)getApplication();
 
-        Intent intent = getIntent();
         TextView description = (TextView) findViewById(R.id.userDescription);
         description.setText(data.getUserName() + "'s Album");
 
