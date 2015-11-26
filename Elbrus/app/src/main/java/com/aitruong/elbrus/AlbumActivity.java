@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.ShareActionProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class AlbumActivity extends AppCompatActivity{
 
     final AlbumActivity thisActivity=this;
     public final static String MESSAGE_ALBUM_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_ALBUM_ID";
-
+    private ShareActionProvider mShareActionProvider;
     private Data data;
     private GridView mGridView;
     private ArrayList<HashMap<String, Object>> lstImageItem;
@@ -81,7 +82,18 @@ public class AlbumActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_album, menu);
+
+        // Inflate the share button on the menu
+
         return true;
+    }
+
+    //Call to update the share intent
+
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     @Override

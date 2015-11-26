@@ -8,9 +8,10 @@
     android:background="@drawable/blue"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-
     tools:showIn="@layout/activity_elbrus"
     tools:context=".ElbrusActivity">
+
+
 
     <ImageView
 
