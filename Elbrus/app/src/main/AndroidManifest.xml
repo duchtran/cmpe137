@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aitruong.elbrus" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".Data"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name=".ElbrusActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".AlbumActivity"
+            android:label="@string/title_activity_album"
+            android:parentActivityName=".ElbrusActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.ElbrusActivity" />
+        </activity>
+        <activity
+            android:name=".AlbumCreateActivity"
+            android:label="@string/title_activity_album_create"
+            android:parentActivityName=".AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumActivity" />
+        </activity>
+        <activity
+            android:name=".AlbumDetailActivity"
+            android:label="@string/title_activity_album_detail"
+            android:parentActivityName=".AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumActivity" />
+        </activity>
+        <activity
+            android:name=".AlbumShareActivity"
+            android:label="@string/title_activity_album_share"
+            android:parentActivityName=".AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumActivity" />
+        </activity>
+        <activity
+            android:name=".InviteActivity"
+            android:label="@string/title_activity_invite"
+            android:parentActivityName=".AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumActivity" />
+        </activity>
+        <activity
+            android:name=".PhotoCreateActivity"
+            android:label="@string/title_activity_photo_create"
+            android:parentActivityName=".AlbumDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumDetailActivity" />
+        </activity>
+        <activity
+            android:name=".PhotoDetailActivity"
+            android:label="@string/title_activity_photo_detail"
+            android:parentActivityName=".AlbumDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumDetailActivity" />
+        </activity>
+        <activity
+            android:name=".PhotoSearchActivity"
+            android:label="@string/title_activity_photo_search"
+            android:parentActivityName=".AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aitruong.elbrus.AlbumActivity" />
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.aitruong.elbrus.AlbumActivity">
+    <item android:id="@+id/action_create_photo"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/action_create_photo"
+        android:showAsAction="always"></item>
+</menu>
