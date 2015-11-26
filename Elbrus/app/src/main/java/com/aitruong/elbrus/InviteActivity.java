@@ -13,6 +13,9 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.widget.AppInviteDialog;
+import android.net.Uri;
+import  bolts.AppLinks;
+import android.util.Log;
 
 public class InviteActivity extends AppCompatActivity {
     private CallbackManager CallbackManager;
@@ -24,6 +27,24 @@ public class InviteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_invite);
+//        Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
+//        if (targetUrl != null) {
+//            Log.i("Activity", "App Link Target URL: " + targetUrl.toString());
+//        }
+
+        String appLinkUrl, previewImageUrl;
+
+        appLinkUrl = "https://fb.me/879423695509605";
+        previewImageUrl = "http://freedesignfile.com/upload/2014/11/Winter-christmas-and-new-year-frame-backgrounds-03.jpg";
+
+        if (AppInviteDialog.canShow()) {
+            AppInviteContent content = new AppInviteContent.Builder()
+                    .setApplinkUrl(appLinkUrl)
+                    .setPreviewImageUrl(previewImageUrl)
+                    .build();
+            AppInviteDialog.show(this, content);
+        }
+//        setContentView(R.layout.activity_invite);
 
 
 
@@ -42,25 +63,25 @@ public class InviteActivity extends AppCompatActivity {
     }
 
 
-    public static void openDialogInvite(final InviteActivity activity)
-    {
-        String appLinkUrl, previewImageUrl;
-
-        appLinkUrl = " https://fb.me/878949265557048";
-        previewImageUrl = "https://www.example.com/my_invite_image.jpg";
-
-        if (AppInviteDialog.canShow())
-        {
-            AppInviteContent content = new AppInviteContent.Builder()
-                    .setApplinkUrl(appLinkUrl)
-                    .setPreviewImageUrl(previewImageUrl)
-                    .build();
-
-            AppInviteDialog appInviteDialog = new AppInviteDialog(activity);
-
-
-            appInviteDialog.show(content);
-        }
-    }
+//    public static void openDialogInvite(final InviteActivity activity)
+//    {
+//        String appLinkUrl, previewImageUrl;
+//
+//        appLinkUrl = " https://fb.me/878949265557048";
+//        previewImageUrl = "https://www.example.com/my_invite_image.jpg";
+//
+//        if (AppInviteDialog.canShow())
+//        {
+//            AppInviteContent content = new AppInviteContent.Builder()
+//                    .setApplinkUrl(appLinkUrl)
+//                    .setPreviewImageUrl(previewImageUrl)
+//                    .build();
+//
+//            AppInviteDialog appInviteDialog = new AppInviteDialog(activity);
+//
+//
+//            appInviteDialog.show(content);
+//        }
+//    }
 
 }
