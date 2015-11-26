@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DOWNLOAD"
-        android:onClick="onClickDownload"
         android:layout_below="@+id/IVdownloadedImage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
@@ -51,6 +50,7 @@
         android:id="@+id/ETName"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/BAdd"
+        android:hint="uName"
         android:layout_marginTop="31dp" />
 
     <EditText
@@ -60,6 +60,7 @@
         android:ems="10"
         android:id="@+id/ETPassword"
         android:layout_below="@+id/ETName"
+        android:hint="pw"
         android:layout_alignStart="@+id/ETName"
         />
 
@@ -68,7 +69,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:hint="0"
+        android:hint="0 (ETNumber)"
         android:id="@+id/ETNumber"
         android:layout_alignBottom="@+id/BUpload"
         android:layout_toEndOf="@+id/BDownload" />
@@ -78,8 +79,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/ETNumber"
+        android:layout_alignTop="@+id/IVdownloadedImage"
         android:layout_toEndOf="@+id/BUpload" />
 
     <Button
@@ -87,8 +87,25 @@
         android:layout_height="wrap_content"
         android:text="test"
         android:id="@+id/BTest"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
         android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/ETNumber" />
+        android:layout_toEndOf="@+id/textView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="photo name"
+        android:id="@+id/ETPName"
+        android:layout_above="@+id/BDownload"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List"
+        android:id="@+id/BList"
+        android:layout_alignTop="@+id/BDownload"
+        android:layout_alignEnd="@+id/BAdd" />
 
 </RelativeLayout>
