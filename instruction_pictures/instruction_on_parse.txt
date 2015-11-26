@@ -1,0 +1,42 @@
+link: https://www.parse.com/apps/quickstart?app_id=project137#parse_data/mobile/android/native/existing
+
+1. go to the link and download SDK 
+2. extract the file 
+3. on your exisiting file in android studio, add new SDK (P1 -> P4))
+4. add dependencies to build.grable(Module: app) (p5)
+5. add permission in AndroidManifesr.xml (p6)
+6. add Parse enable and initialize in onCreate() of all of activity class (p7)
+
+Those step about is also explained in the given link on top
+
+To login to parse.com on website to check contents:
+username: duchongtran@gmail.com
+password: teameagle
+
+the commands are put in the parseHelper class, make an instance of it in your activity.
+
+So far, commands:
+
+public void addUser(String username, String password); 
+// add a user to parse cloud given username and password, log the result to Log.d tag DATA
+
+ 
+public String getUID (String username, String password);
+// return user id given username and password, return null if cannot find
+
+
+public void addAlbum(String UID, String AlbumName);
+// add an alnum to parse given user id and alnum name, log result to Log.d tag ALBUM
+
+
+public String getAID(String UID, String AlbumName);
+// return album id given user id and album name, return null if cannot find
+
+
+public void addPhoto(String UID, String AID, String PhotoName, Resources res, int pic);
+// Upload a photo onto parse
+// For now, I can only allow upload from drawable folder in android
+// Resource res is found activity class, using command:
+//         Resources res = getResources();
+// pic is found in activity class, using command:
+//	   int pic = R.drawable.<name>;
