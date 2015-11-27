@@ -1,29 +1,32 @@
 package com.aitruong.elbrus;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AlbumActivity extends AppCompatActivity{
+public class AlbumActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     final AlbumActivity thisActivity=this;
     public final static String MESSAGE_ALBUM_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_ALBUM_ID";
 
     private Data data;
     private GridView mGridView;
-    private ArrayList<HashMap<String, Object>> lstImageItem;
+    private GridItemAdapter mAdapter;
+    private boolean isShowDelete = false;
+    private ArrayList<HashMap<String, Object>> myList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,35 +45,20 @@ public class AlbumActivity extends AppCompatActivity{
         mGridView = (GridView) findViewById(R.id.albumGridView);
 
         //init data for test
-        lstImageItem = new ArrayList<HashMap<String, Object>>();
+        myList = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<10;i++)
         {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
             map.put("ItemText", "NO."+String.valueOf(i));
-            lstImageItem.add(map);
+            myList.add(map);
         }
-        SimpleAdapter saImageItems = new SimpleAdapter(this,
-                lstImageItem,
-                R.layout.grid_item,
-                new String[] {"ItemImage","ItemText"},
-                new int[] {R.id.ItemImage,R.id.ItemText});
-        mGridView.setAdapter(saImageItems);
 
         //set listener
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            public void onItemClick(AdapterView<?> arg0,
-                                    View arg1,
-                                    int arg2,//position
-                                    long arg3//row id
-            ) {
-                Intent intent = new Intent(thisActivity,AlbumDetailActivity.class);
-                //for test
-                String message = new String(arg2 + ":" + arg3);
-                intent.putExtra(MESSAGE_ALBUM_ID,message);
-                startActivity(intent);
-            }
-        });
+        mGridView.setOnItemClickListener(this);
+        mGridView.setOnItemLongClickListener(this);
+        mAdapter = new GridItemAdapter(AlbumActivity.this, myList);
+        mGridView.setAdapter(mAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -128,5 +116,74 @@ public class AlbumActivity extends AppCompatActivity{
     public void openShare(){
         Intent intent = new Intent(this,AlbumShareActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> arg0,
+                            View arg1,
+                            int arg2,//position
+                            long arg3//row id
+    ) {
+        Intent intent = new Intent(thisActivity,AlbumDetailActivity.class);
+        //for test
+        String message = String.valueOf(arg2);
+        intent.putExtra(MESSAGE_ALBUM_ID,message);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                   int position, long id) {
+        if (isShowDelete) {
+            isShowDelete = false;
+
+        } else {
+            isShowDelete = true;
+            mAdapter.setIsShowDelete(isShowDelete);
+            View convertView = LayoutInflater.from(AlbumActivity.this).inflate(R.layout.grid_item,null);
+            View deleteView = convertView.findViewById(R.id.delete_markView);
+            //deleteView.setOnClickListener();
+            mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    delete(position);
+                    mAdapter = new GridItemAdapter(AlbumActivity.this, myList);
+                    mGridView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+            });
+        }
+
+        mAdapter.setIsShowDelete(isShowDelete);
+
+        return true;
+    }
+
+
+    private void delete(int position) {
+        ArrayList<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
+        if (isShowDelete) {
+            myList.remove(position);
+            isShowDelete = false;
+        }
+        newList.addAll(myList);
+        myList.clear();
+        myList.addAll(newList);
+    }
+
+    private ArrayList<HashMap<String, Object>> getMenuAdapter(
+                                                              int[] menuImageArray, String[] menuNameArray) {
+        ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+        for (int i = 0; i < menuImageArray.length; i++) {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("image", menuImageArray[i]);
+            map.put("name", menuNameArray[i]);
+            data.add(map);
+        }
+        return data;
     }
 }
