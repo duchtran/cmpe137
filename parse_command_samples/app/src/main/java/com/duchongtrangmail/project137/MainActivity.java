@@ -3,9 +3,11 @@ package com.duchongtrangmail.project137;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -124,15 +128,14 @@ public class MainActivity extends Activity {
         });
 
 
+        LIST.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TEST", parser.getFID("LADk7Toi9u", "65431"));
+                Log.d("TEST1", parser.getPID("LADk7Toi9u", "MfQGGgCRw4", "avatar"));
+               // parser.deleteObject("Photos", "aG4jPs6F5w");
 
-//        LIST.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(MainActivity.this, "Photos");
-//                adapter.setTextKey("PhotoName");
-//                adapter.setImageKey("File");
-//                elv.setAdapter(adapter);
-//            }
-//        });
+            }
+        });
     }
 }
