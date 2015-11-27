@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_main" tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/BUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UPLOAD"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="128dp" />
+
+    <Button
+        android:id="@+id/BDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DOWNLOAD"
+        android:layout_below="@+id/IVdownloadedImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/IVdownloadedImage"
+        android:layout_below="@+id/BUpload"
+        android:layout_marginTop="27dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:id="@+id/BAdd"
+        android:layout_above="@+id/IVdownloadedImage"
+        android:layout_toStartOf="@+id/BDownload" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/ETName"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/BAdd"
+        android:hint="uName"
+        android:layout_marginTop="31dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/ETPassword"
+        android:layout_below="@+id/ETName"
+        android:hint="pw"
+        android:layout_alignStart="@+id/ETName"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="0 (ETNumber)"
+        android:id="@+id/ETNumber"
+        android:layout_alignBottom="@+id/BUpload"
+        android:layout_toEndOf="@+id/BDownload" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/IVdownloadedImage"
+        android:layout_toEndOf="@+id/BUpload" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:id="@+id/BTest"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="photo name"
+        android:id="@+id/ETPName"
+        android:layout_above="@+id/BDownload"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List"
+        android:id="@+id/BList"
+        android:layout_alignTop="@+id/BDownload"
+        android:layout_alignEnd="@+id/BAdd" />
+
+</RelativeLayout>
