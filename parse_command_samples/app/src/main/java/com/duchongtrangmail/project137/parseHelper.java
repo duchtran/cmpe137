@@ -54,19 +54,19 @@ public class parseHelper extends Activity{
         }
     }
 
-    public void addAlbum(String UID, String AlbumName) {
-    // add an album to parse given user id and album name, log result to Log.d tag ALBUM
+    public void addAlbum(String UID, String AlbumName, String Description) {
+    // add an album to parse given user id, album name, and description, log result to Log.d tag ALBUM
 
         ParseObject album = new ParseObject("Albums");
         album.put("UID", UID);
         album.put("AlbumName", AlbumName);
+        album.put("Description", Description);
         album.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("ALBUMS", "Upload Successfully");
-                }
-                else {
+                } else {
                     Log.d("ALBUMS", "Cannot upload to Albums");
                 }
             }
@@ -89,7 +89,7 @@ public class parseHelper extends Activity{
             return null;
         }
     }
-    public void addPhoto(String UID, String AID, String PhotoName, Resources res, int pic) {
+    public void addPhoto(String UID, String AID, String PhotoName, Resources res, int pic, String note) {
     // Upload a photo onto parse
     // For now, I can only allow upload from drawable folder in android
     // Resource res is found activity class, using command:
@@ -111,6 +111,7 @@ public class parseHelper extends Activity{
         photo.put("UID", UID);
         photo.put("AID", AID);
         photo.put("PhotoName", PhotoName);
+        photo.put("Note", note);
         photo.put("File", file);
 
         photo.saveInBackground();
@@ -309,6 +310,20 @@ public class parseHelper extends Activity{
         }
         catch (ParseException e) {
             Log.d("PHOTO", "Cannot get list");
+            return null;
+        }
+    }
+
+    public String getPhotoNote(String PID ) {
+    //  return the note of a photo given the photo id, return null if cannot find
+        try {
+            ParseQuery query = new ParseQuery("Photos");
+            query.whereEqualTo("objectId", PID);
+            String Note;
+            ParseObject object = query.getFirst();
+            Note = object.getString("Note");
+            return Note;
+        } catch (ParseException e) {
             return null;
         }
     }
