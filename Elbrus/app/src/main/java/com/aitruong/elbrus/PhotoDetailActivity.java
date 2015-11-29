@@ -18,13 +18,16 @@ public class PhotoDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         data = (Data)getApplication();
 
+        toolbar.setTitle(data.getCurrentPhotoName());
+        setSupportActionBar(toolbar);
+
         Intent intent = getIntent();
         TextView description = (TextView) findViewById(R.id.photoDescription);
-        description.setText("Note: "+ data.getCurrentPhotoNote());
+        description.setText(data.getCurrentPhotoNote());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

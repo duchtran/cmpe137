@@ -10,4 +10,55 @@
     tools:showIn="@layout/activity_photo_create"
     tools:context="com.aitruong.elbrus.PhotoCreateActivity">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose a photo"
+        android:id="@+id/choose_photo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:id="@+id/photoCreate_textView_name"
+        android:layout_below="@id/choose_photo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="30dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/photoCreate_edit_name"
+        android:layout_below="@id/photoCreate_textView_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="30dp"
+        android:hint="Enter the name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note:"
+        android:id="@+id/photoCreate_textView_note"
+        android:textSize="30dp"
+        android:layout_below="@+id/photoCreate_edit_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/photoCreate_edit_note"
+        android:layout_below="@+id/photoCreate_textView_note"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="30dp"
+        android:gravity="top"
+        android:hint="Enter the note"/>
+
+
 </RelativeLayout>

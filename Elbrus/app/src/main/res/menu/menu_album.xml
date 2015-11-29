@@ -20,4 +20,8 @@
         android:actionProviderClass=
             "android.widget.ShareActionProvider"
         android:showAsAction="withText"></item>
+    <item android:id="@+id/action_album_refresh"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/action_album_refresh"
+        android:showAsAction="always"></item>
 </menu>

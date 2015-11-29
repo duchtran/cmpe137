@@ -12,10 +12,7 @@ import android.widget.EditText;
 public class AlbumCreateActivity extends AppCompatActivity {
 
     final AlbumCreateActivity thisActivity = this;
-
     private Data data;
-    private String UID;
-    private parseHelper parser = new parseHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +22,6 @@ public class AlbumCreateActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         data = (Data)getApplication();
-        UID = data.getUserID();
 
         final EditText title = (EditText) findViewById(R.id.albumCreate_edit_title);
         final EditText description = (EditText) findViewById(R.id.albumCreate_edit_description);
@@ -34,9 +30,15 @@ public class AlbumCreateActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Create the Album", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                parser.addAlbum(UID,title.getText().toString(),description.getText().toString());
+                boolean result = data.getParser().addAlbum(data.getUserID(), title.getText().toString(), description.getText().toString());
+                if(result){
+                    Snackbar.make(view, "Create Album Success!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                else{
+                    Snackbar.make(view, "Create Album Fail!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
                 thisActivity.finish();
             }
         });

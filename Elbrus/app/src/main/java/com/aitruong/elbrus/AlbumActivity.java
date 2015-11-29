@@ -101,6 +101,9 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
             case R.id.action_share:
                 openShare();
                 return true;
+            case R.id.action_album_refresh:
+                refreshList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

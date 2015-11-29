@@ -25,6 +25,10 @@ public class GridItemAdapter extends BaseAdapter {
         this.myList = myList;
     }
 
+    public void setMyList(ArrayList<HashMap<String, Object>> myList) {
+        this.myList = myList;
+    }
+
     public void setIsShowDelete(boolean isShowDelete) {
         this.isShowDelete = isShowDelete;
         notifyDataSetChanged();

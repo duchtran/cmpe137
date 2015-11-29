@@ -6,4 +6,8 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/action_create_photo"
         android:showAsAction="always"></item>
+    <item android:id="@+id/action_photo_refresh"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/action_photo_refresh"
+        android:showAsAction="always"></item>
 </menu>

@@ -17,4 +17,6 @@
     <string name="title_activity_photo_create">PhotoCreateActivity</string>
     <string name="title_activity_photo_detail">PhotoDetailActivity</string>
     <string name="title_activity_photo_search">PhotoSearchActivity</string>
+    <string name="action_photo_refresh">Refresh</string>
+    <string name="action_album_refresh">Refresh</string>
 </resources>
