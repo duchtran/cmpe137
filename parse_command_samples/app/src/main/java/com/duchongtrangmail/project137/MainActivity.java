@@ -102,7 +102,8 @@ public class MainActivity extends Activity {
                     Resources res = getResources();
                     String name = "avatar";
                     int pic = R.drawable.avatar;
-                    parser.addPhoto(uid, aid, "avatar", res, pic);
+                    String notephoto = "testing";
+                    parser.addPhoto(uid, aid, "avatar", res, pic, notephoto);
                     Toast.makeText(MainActivity.this, "Added photo avatar", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "Cannot add photo", Toast.LENGTH_SHORT).show();
@@ -131,10 +132,10 @@ public class MainActivity extends Activity {
         LIST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TEST", parser.getFID("LADk7Toi9u", "65431"));
-                Log.d("TEST1", parser.getPID("LADk7Toi9u", "MfQGGgCRw4", "avatar"));
+//                Log.d("TEST", parser.getFID("LADk7Toi9u", "65431"));
+//                Log.d("TEST1", parser.getPID("LADk7Toi9u", "MfQGGgCRw4", "avatar"));
                // parser.deleteObject("Photos", "aG4jPs6F5w");
-
+                Log.d("TEST3", parser.getPhotoNote("gD6NgK43js"));
             }
         });
     }
