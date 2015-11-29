@@ -24,22 +24,20 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onResume() {
         super.onResume();
-        //refreshList();
+        refreshList();
     }
 
     final AlbumActivity thisActivity=this;
-    public final static String MESSAGE_ALBUM_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_ALBUM_ID";
     private ShareActionProvider mShareActionProvider;
     private Data data;
     private GridView mGridView;
     private GridItemAdapter mAdapter;
     private boolean isShowDelete = false;
     private ArrayList<HashMap<String, Object>> myList = new ArrayList<HashMap<String, Object>>();
-    private String UID;
 
-    private parseHelper parser = new parseHelper();
+
     ArrayList<String> albumNames;
-    ArrayList<String> albumID;
+    ArrayList<String> albumDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +47,6 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         setSupportActionBar(toolbar);
 
         data = (Data)getApplication();
-        UID = data.getUserID();
-
-        //Parse init
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "98cD21Y6LEh4hQAPn67TwPQEHMI9vQUldxtOMWem", "leyfUbqBwE10KFsysTEQ9bRo3L4HAhyxcz0rRce8");
 
         //show description
         TextView description = (TextView) findViewById(R.id.userDescription);
@@ -145,9 +138,10 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         }
         else{
             Intent intent = new Intent(thisActivity,AlbumDetailActivity.class);
-            //for test
-            String message = String.valueOf(arg2);
-            intent.putExtra(MESSAGE_ALBUM_ID,message);
+            String AID = data.getParser().getAID(data.getUserID(), albumNames.get(arg2));
+            data.setCurrentAlbumID(AID);
+            data.setCurrentAlbumName(albumNames.get(arg2));
+            data.setCurrentAlbumDescription(albumDescription.get(arg2));
             startActivity(intent);
         }
     }
@@ -161,10 +155,9 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         } else {
             isShowDelete = true;
             mAdapter.setIsShowDelete(isShowDelete);
-            View convertView = LayoutInflater.from(AlbumActivity.this).inflate(R.layout.grid_item,null);
         }
 
-        mAdapter.setIsShowDelete(isShowDelete);
+        //mAdapter.setIsShowDelete(isShowDelete);
 
         return true;
     }
@@ -172,14 +165,15 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void delete(int position) {
         ArrayList<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
-        String AID = parser.getAID(UID, albumNames.get(position));
-        parser.deleteObject("Albums",AID);
+        String AID = data.getParser().getAID(data.getUserID(), albumNames.get(position));
+        data.getParser().deleteObject("Albums", AID);
         isShowDelete = false;
     }
 
     private void refreshList(){
         myList.clear();
-        albumNames = parser.getListAlbum(UID,0);
+        albumNames = data.getParser().getListAlbum(data.getUserID(), 0);
+        albumDescription = data.getParser().getListAlbum(data.getUserID(),1);
         if(albumNames != null){
             for(int i=0;i<albumNames.size();i++){
                 HashMap<String, Object> map = new HashMap<String, Object>();

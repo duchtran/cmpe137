@@ -22,13 +22,14 @@ import java.util.HashMap;
 public class AlbumDetailActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
 
     final AlbumDetailActivity thisActivity=this;
-    public final static String MESSAGE_PHOTO_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_PHOTO_ID";
 
-    private ArrayList<HashMap<String, Object>> myList;
     private Data data;
     private GridView mGridView;
     private GridItemAdapter mAdapter;
     private boolean isShowDelete = false;
+    private ArrayList<HashMap<String, Object>> myList = new ArrayList<HashMap<String, Object>>();
+
+    ArrayList<String> photoNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +38,16 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        data = (Data)getApplication();
+
         //show description
-        //Intent intent = getIntent();
-        //String albumID = intent.getStringExtra(AlbumActivity.MESSAGE_ALBUM_ID);
-        //TextView description = (TextView) findViewById(R.id.albumDescription);
-        //description.setText(albumID + "'s photo: description");
+        TextView description = (TextView) findViewById(R.id.albumDescription);
+        description.setText(data.getCurrentAlbumName() + ": "+ data.getCurrentAlbumDescription());
 
         //show photos
-        GridView gridview = (GridView) findViewById(R.id.photoGridView);
+        mGridView = (GridView) findViewById(R.id.photoGridView);
+
+        refreshList();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -89,9 +92,10 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
         }
         else{
             Intent intent = new Intent(thisActivity,PhotoDetailActivity.class);
-            //for test
-            //String message = String.valueOf(arg2);
-            //intent.putExtra(MESSAGE_ALBUM_ID,message);
+            String PID = data.getParser().getPID(data.getUserID(),data.getCurrentAlbumID(),photoNames.get(arg2));
+            data.setCurrentPhotoID(PID);
+            data.setCurrentPhotoName(photoNames.get(arg2));
+            data.setCurrentPhotoNote(data.getParser().getPhotoNote(PID));
             startActivity(intent);
         }
     }
@@ -105,38 +109,37 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
         } else {
             isShowDelete = true;
             mAdapter.setIsShowDelete(isShowDelete);
-            View convertView = LayoutInflater.from(AlbumDetailActivity.this).inflate(R.layout.grid_item,null);
         }
 
-        mAdapter.setIsShowDelete(isShowDelete);
+        //mAdapter.setIsShowDelete(isShowDelete);
 
         return true;
     }
 
 
     private void delete(int position) {
-        //ArrayList<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
-        //String AID = parser.getAID(UID, albumNames.get(position));
-        //parser.deleteObject("Albums", AID);
+        ArrayList<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
+        String PID = data.getParser().getPID(data.getUserID(),data.getCurrentAlbumID(), photoNames.get(position));
+        data.getParser().deleteObject("Photos", PID);
         isShowDelete = false;
     }
 
     private void refreshList(){
-        //myList.clear();
-        //albumNames = parser.getListAlbum(UID,0);
-        //if(albumNames != null){
-        //    for(int i=0;i<albumNames.size();i++){
-        //        HashMap<String, Object> map = new HashMap<String, Object>();
-        //        map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
-        //        map.put("ItemText",albumNames.get(i));
-        //        myList.add(map);
-        //    }
-        //}
-        ////set listener
-        //mGridView.setOnItemClickListener(this);
-        //mGridView.setOnItemLongClickListener(this);
-        //mAdapter = new GridItemAdapter(AlbumActivity.this, myList);
-        //mGridView.setAdapter(mAdapter);
-        //mAdapter.notifyDataSetChanged();
+        myList.clear();
+        photoNames = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(),data.getCurrentAlbumID());
+        if(photoNames != null){
+            for(int i=0;i<photoNames.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("ItemImage", R.drawable.ic_photo_black_24dp);
+                map.put("ItemText",photoNames.get(i));
+                myList.add(map);
+            }
+        }
+        //set listener
+        mGridView.setOnItemClickListener(this);
+        mGridView.setOnItemLongClickListener(this);
+        mAdapter = new GridItemAdapter(AlbumDetailActivity.this, myList);
+        mGridView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }

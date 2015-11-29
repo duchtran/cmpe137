@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 public class PhotoDetailActivity extends AppCompatActivity {
 
+    private Data data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,10 +20,11 @@ public class PhotoDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        data = (Data)getApplication();
+
         Intent intent = getIntent();
-        String photoID = intent.getStringExtra(AlbumDetailActivity.MESSAGE_PHOTO_ID);
         TextView description = (TextView) findViewById(R.id.photoDescription);
-        description.setText("Note: "+ photoID);
+        description.setText("Note: "+ data.getCurrentPhotoNote());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
