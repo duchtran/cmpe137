@@ -58,17 +58,22 @@ public class MainActivity extends Activity {
         ADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //parser.addUser(uName.getText().toString(), pw.getText().toString());
-                try {
-                    String uid = parser.getUID(uName.getText().toString(), pw.getText().toString());
-                    //String albumName = ETnumber.getText().toString();
-                    String friendName = ETnumber.getText().toString();
-
-                    parser.addFriend(uid, friendName);
-                    Toast.makeText(MainActivity.this, "Added  " + friendName + "to friendlist", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "Cannot add ", Toast.LENGTH_SHORT).show();
+                if (parser.addUser(uName.getText().toString(), pw.getText().toString())) {
+                    Log.d("ADD USER", "Added user");
                 }
+                else
+                    Log.d("ADD USER", "Cannot added user");
+                ;
+//                try {
+//                    String uid = parser.getUID(uName.getText().toString(), pw.getText().toString());
+//                    //String albumName = ETnumber.getText().toString();
+//                    String friendName = ETnumber.getText().toString();
+//
+//                    parser.addFriend(uid, friendName);
+//                    Toast.makeText(MainActivity.this, "Added  " + friendName + "to friendlist", Toast.LENGTH_SHORT).show();
+//                } catch (Exception e) {
+//                    Toast.makeText(MainActivity.this, "Cannot add ", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 

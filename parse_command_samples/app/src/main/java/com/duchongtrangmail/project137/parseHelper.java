@@ -20,21 +20,26 @@ import java.util.List;
 
 public class parseHelper extends Activity{
 
-    public void addUser(String username, String password) {
+    public boolean addUser(String username, String password) {
     // add a user to parse cloud given username and password, log the result to Log.d tag DATA
-
-        final ParseObject user = new ParseObject("Users");
-        user.put("username", username);
-        user.put("password", password);
-        user.saveInBackground(new SaveCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("DATA", "Successful ");
-                } else {
-                    Log.d("DATA", "Cannot add user");
+        try {
+            final ParseObject user = new ParseObject("Users");
+            user.put("username", username);
+            user.put("password", password);
+            user.saveInBackground(new SaveCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("DATA", "Successful ");
+                    } else {
+                        Log.d("DATA", "Cannot add user");
+                    }
                 }
-            }
-        });
+            });
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public String getUID (String username, String password) {
@@ -54,23 +59,28 @@ public class parseHelper extends Activity{
         }
     }
 
-    public void addAlbum(String UID, String AlbumName, String Description) {
+    public boolean addAlbum(String UID, String AlbumName, String Description) {
     // add an album to parse given user id, album name, and description, log result to Log.d tag ALBUM
-
-        ParseObject album = new ParseObject("Albums");
-        album.put("UID", UID);
-        album.put("AlbumName", AlbumName);
-        album.put("Description", Description);
-        album.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("ALBUMS", "Upload Successfully");
-                } else {
-                    Log.d("ALBUMS", "Cannot upload to Albums");
+        try {
+            ParseObject album = new ParseObject("Albums");
+            album.put("UID", UID);
+            album.put("AlbumName", AlbumName);
+            album.put("Description", Description);
+            album.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("ALBUMS", "Upload Successfully");
+                    } else {
+                        Log.d("ALBUMS", "Cannot upload to Albums");
+                    }
                 }
-            }
-        });
+            });
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public String getAID(String UID, String AlbumName) {
@@ -89,32 +99,37 @@ public class parseHelper extends Activity{
             return null;
         }
     }
-    public void addPhoto(String UID, String AID, String PhotoName, Resources res, int pic, String note) {
+    public boolean addPhoto(String UID, String AID, String PhotoName, Resources res, int pic, String note) {
     // Upload a photo onto parse
     // For now, I can only allow upload from drawable folder in android
     // Resource res is found activity class, using command:
     //      Resources res = getResources();
     // pic is found in activity class, using command:
     //      int pic = R.drawable.<name>;
-
-        Bitmap bitmap = BitmapFactory.decodeResource(res, pic);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte [] image = stream.toByteArray();
-        ParseFile file = new ParseFile(PhotoName, image);
-        try  {
-            file.save();
-        } catch (Exception e) {
-            System.out.println("cannot save file");
+        try {
+            Bitmap bitmap = BitmapFactory.decodeResource(res, pic);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] image = stream.toByteArray();
+            ParseFile file = new ParseFile(PhotoName, image);
+            try {
+                file.save();
+            } catch (Exception e) {
+                System.out.println("cannot save file");
+                return false;
+            }
+            ParseObject photo = new ParseObject("Photos");
+            photo.put("UID", UID);
+            photo.put("AID", AID);
+            photo.put("PhotoName", PhotoName);
+            photo.put("Note", note);
+            photo.put("File", file);
+            photo.saveInBackground();
+            return true;
         }
-        ParseObject photo = new ParseObject("Photos");
-        photo.put("UID", UID);
-        photo.put("AID", AID);
-        photo.put("PhotoName", PhotoName);
-        photo.put("Note", note);
-        photo.put("File", file);
-
-        photo.saveInBackground();
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public ArrayList<String> getListAlbum(String UID, int type) {
@@ -141,7 +156,7 @@ public class parseHelper extends Activity{
             for (int i = 0; i < objectList.size(); i++) {
                 list.add(objectList.get(i).getString(column));
             }
-            Log.d("ALBUM", "Successfully get list of "+column);
+            Log.d("ALBUM", "Successfully get list of " + column);
             return list;
         }
         catch (ParseException e) {
@@ -184,10 +199,14 @@ public class parseHelper extends Activity{
         }
     }
 
-    public void deleteObject(String Table, String ID) {
-    //  delete an object, can be anything such as pictures, album, user... give the object's table name and object ID
-
-        ParseObject.createWithoutData(Table, ID).deleteEventually();
+    public boolean deleteObject(String Table, String ID) {
+        //  delete an object, can be anything such as pictures, album, user... give the object's table name and object ID
+        try {
+            ParseObject.createWithoutData(Table, ID).deleteEventually();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
@@ -235,24 +254,30 @@ public class parseHelper extends Activity{
         }
     }
 
-    public void addFriend(String UID, String Name) {
+    public boolean addFriend(String UID, String Name) {
     //  add a friend name on to parse server given the UID
-
-        ParseObject friend = new ParseObject("Friend");
-        friend.put("UID", UID);
-        friend.put("Name", Name);
-        friend.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("FRIEND", "Upload Successfully");
+        try {
+            ParseObject friend = new ParseObject("Friend");
+            friend.put("UID", UID);
+            friend.put("Name", Name);
+            friend.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("FRIEND", "Upload Successfully");
+                    } else {
+                        Log.d("FRIEND", "Cannot upload to Friend table");
+                    }
                 }
-                else {
-                    Log.d("FRIEND", "Cannot upload to Friend table");
-                }
-            }
-        });
+            });
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
+
+
     public ArrayList<String> getListFriendNames(String UID) {
     //  return the list of Friends’ names given the UID
 

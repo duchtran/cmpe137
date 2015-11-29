@@ -4,7 +4,7 @@ link: https://www.parse.com/apps/quickstart?app_id=project137#parse_data/mobile/
 2. extract the file 
 3. on your exisiting file in android studio, add new SDK (P1 -> P4))
 4. add dependencies to build.grable(Module: app) (p5)
-5. add permission in AndroidManifesr.xml (p6)
+5. add permission in AndroidManifest.xml (p6)
 6. add Parse enable and initialize in onCreate() of all of activity class (p7)
 
 Those step about is also explained in the given link on top
@@ -17,26 +17,73 @@ the commands are put in the parseHelper class, make an instance of it in your ac
 
 So far, commands:
 
-public void addUser(String username, String password); 
-// add a user to parse cloud given username and password, log the result to Log.d tag DATA
+public boolean addUser(String username, String password); 
+// add a user to parse cloud given username and password, log the result to Log.d tag DATA, return false if cannot add
 
- 
+
 public String getUID (String username, String password);
 // return user id given username and password, return null if cannot find
 
 
-public void addAlbum(String UID, String AlbumName);
-// add an alnum to parse given user id and alnum name, log result to Log.d tag ALBUM
+public boolean addAlbum(String UID, String AlbumName, String Description);
+// add an album to parse given user id, album name, and description, log result to Log.d tag ALBUM, return false if cannot add
 
 
 public String getAID(String UID, String AlbumName);
 // return album id given user id and album name, return null if cannot find
 
 
-public void addPhoto(String UID, String AID, String PhotoName, Resources res, int pic);
+public boolean addPhoto(String UID, String AID, String PhotoName, Resources res, int pic, String note);
 // Upload a photo onto parse
 // For now, I can only allow upload from drawable folder in android
 // Resource res is found activity class, using command:
 //         Resources res = getResources();
 // pic is found in activity class, using command:
 //	   int pic = R.drawable.<name>;
+
+
+public ArrayList<String> getListAlbum(String UID, int type);
+// return the list from Album table, type determine what column to get
+// type = 0: AlbumName
+// type = 1: Description
+
+
+public ArrayList<Bitmap> getListPhotoFiles(String UID, String AID);
+// return the list of photo file that match UID and AID in bitmap format 
+// to display on view, use .setImageBitmap(Bitmap bmp) from ImageView
+
+
+public boolean deleteObject(String Table, String ID);
+//  delete an object, can be anything such as pictures, album, user... give the object's table name and object ID, return false if cannot delete
+
+
+public Bitmap getSpecificPhotoFile(String UID, String AID, String PhotoName)
+// return the specific photo file that match UID, AID, and PhotoName in bitmap format 
+// to display on view, use .setImageBitmap(Bitmap bmp) from ImageView
+
+public String getPID(String UID, String AID, String PhotoName);
+// return photo id given user id, aid, and photo name, return null if cannot find
+
+
+public String getFID(String UID, String Name);
+// return friend id given user id and friend's name, return null if cannot find
+    
+
+public boolean addFriend(String UID, String Name);
+// add a friend name on to parse server given the UID, return false if cannot add
+
+
+public ArrayList<String> getListFriendNames(String UID);
+// return the list of Friends’ names given the UID
+
+
+public ArrayList<String> getListPhotoNamesFromUser(String UID);
+// return the list of photo names given the UID, regardless of Album (AID)
+
+
+public ArrayList<String> getListPhotoNamesFromUser_Album(String UID, String AID);
+// return the list of photo names that matches UID and AID
+
+
+public String getPhotoNote(String PID );
+//  return the note of a photo given the photo id, return null if cannot find
