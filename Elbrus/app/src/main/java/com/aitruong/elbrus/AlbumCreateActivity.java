@@ -13,6 +13,10 @@ public class AlbumCreateActivity extends AppCompatActivity {
 
     final AlbumCreateActivity thisActivity = this;
 
+    private Data data;
+    private String UID;
+    private parseHelper parser = new parseHelper();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +24,11 @@ public class AlbumCreateActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText title = (EditText) findViewById(R.id.albumCreate_edit_title);
-        EditText description = (EditText) findViewById(R.id.albumCreate_edit_description);
+        data = (Data)getApplication();
+        UID = data.getUserID();
+
+        final EditText title = (EditText) findViewById(R.id.albumCreate_edit_title);
+        final EditText description = (EditText) findViewById(R.id.albumCreate_edit_description);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -29,8 +36,8 @@ public class AlbumCreateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Create the Album", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent intent = new Intent(thisActivity,AlbumActivity.class);
-                startActivity(intent);
+                parser.addAlbum(UID,title.getText().toString(),description.getText().toString());
+                thisActivity.finish();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

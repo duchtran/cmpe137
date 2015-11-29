@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AlbumActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //refreshList();
+    }
 
     final AlbumActivity thisActivity=this;
     public final static String MESSAGE_ALBUM_ID = "com.aitruong.elbrus.ElbrusActivity.MESSAGE_ALBUM_ID";
@@ -29,9 +34,12 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
     private GridView mGridView;
     private GridItemAdapter mAdapter;
     private boolean isShowDelete = false;
-    private ArrayList<HashMap<String, Object>> myList;
+    private ArrayList<HashMap<String, Object>> myList = new ArrayList<HashMap<String, Object>>();
+    private String UID;
 
     private parseHelper parser = new parseHelper();
+    ArrayList<String> albumNames;
+    ArrayList<String> albumID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +48,12 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        data = (Data)getApplication();
+        UID = data.getUserID();
+
         //Parse init
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "98cD21Y6LEh4hQAPn67TwPQEHMI9vQUldxtOMWem", "leyfUbqBwE10KFsysTEQ9bRo3L4HAhyxcz0rRce8");
-
-        data = (Data)getApplication();
 
         //show description
         TextView description = (TextView) findViewById(R.id.userDescription);
@@ -53,36 +62,7 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         //show albums
         mGridView = (GridView) findViewById(R.id.albumGridView);
 
-        //init data for test
-        //myList = new ArrayList<HashMap<String, Object>>();
-        //for(int i=0;i<3;i++)
-        //{
-        //    HashMap<String, Object> map = new HashMap<String, Object>();
-        //    map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
-        //    map.put("ItemText", "NO."+String.valueOf(i));
-        //    myList.add(map);
-        //}
-
-        //init data for album
-        parser.addAlbum("0000","Name4");
-        parser.addAlbum("0000","Name5");
-        parser.addAlbum("0000","Name6");
-
-        ArrayList<String> albumNames = parser.getListAlbum("0000",0);
-        if(albumNames != null){
-            for(int i=0;i<albumNames.size();i++){
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
-                map.put("ItemText",albumNames.get(i));
-                myList.add(map);
-            }
-        }
-
-        //set listener
-        mGridView.setOnItemClickListener(this);
-        mGridView.setOnItemLongClickListener(this);
-        mAdapter = new GridItemAdapter(AlbumActivity.this, myList);
-        mGridView.setAdapter(mAdapter);
+        refreshList();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -159,11 +139,17 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
                             int arg2,//position
                             long arg3//row id
     ) {
-        Intent intent = new Intent(thisActivity,AlbumDetailActivity.class);
-        //for test
-        String message = String.valueOf(arg2);
-        intent.putExtra(MESSAGE_ALBUM_ID,message);
-        startActivity(intent);
+        if (isShowDelete){
+            delete(arg2);
+            refreshList();
+        }
+        else{
+            Intent intent = new Intent(thisActivity,AlbumDetailActivity.class);
+            //for test
+            String message = String.valueOf(arg2);
+            intent.putExtra(MESSAGE_ALBUM_ID,message);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -176,21 +162,6 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
             isShowDelete = true;
             mAdapter.setIsShowDelete(isShowDelete);
             View convertView = LayoutInflater.from(AlbumActivity.this).inflate(R.layout.grid_item,null);
-            View deleteView = convertView.findViewById(R.id.delete_markView);
-            //deleteView.setOnClickListener();
-            mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    delete(position);
-                    mAdapter = new GridItemAdapter(AlbumActivity.this, myList);
-                    mGridView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-
-                }
-
-            });
         }
 
         mAdapter.setIsShowDelete(isShowDelete);
@@ -201,25 +172,27 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private void delete(int position) {
         ArrayList<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
-        if (isShowDelete) {
-            myList.remove(position);
-
-            isShowDelete = false;
-        }
-        newList.addAll(myList);
-        myList.clear();
-        myList.addAll(newList);
+        String AID = parser.getAID(UID, albumNames.get(position));
+        parser.deleteObject("Albums",AID);
+        isShowDelete = false;
     }
 
-    private ArrayList<HashMap<String, Object>> getMenuAdapter(
-                                                              int[] menuImageArray, String[] menuNameArray) {
-        ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < menuImageArray.length; i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("image", menuImageArray[i]);
-            map.put("name", menuNameArray[i]);
-            data.add(map);
+    private void refreshList(){
+        myList.clear();
+        albumNames = parser.getListAlbum(UID,0);
+        if(albumNames != null){
+            for(int i=0;i<albumNames.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
+                map.put("ItemText",albumNames.get(i));
+                myList.add(map);
+            }
         }
-        return data;
+        //set listener
+        mGridView.setOnItemClickListener(this);
+        mGridView.setOnItemLongClickListener(this);
+        mAdapter = new GridItemAdapter(AlbumActivity.this, myList);
+        mGridView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }
