@@ -15,6 +15,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.ShareActionProvider;
 
+import com.parse.Parse;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,12 +31,18 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
     private boolean isShowDelete = false;
     private ArrayList<HashMap<String, Object>> myList;
 
+    private parseHelper parser = new parseHelper();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Parse init
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "98cD21Y6LEh4hQAPn67TwPQEHMI9vQUldxtOMWem", "leyfUbqBwE10KFsysTEQ9bRo3L4HAhyxcz0rRce8");
 
         data = (Data)getApplication();
 
@@ -46,13 +54,28 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         mGridView = (GridView) findViewById(R.id.albumGridView);
 
         //init data for test
-        myList = new ArrayList<HashMap<String, Object>>();
-        for(int i=0;i<10;i++)
-        {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
-            map.put("ItemText", "NO."+String.valueOf(i));
-            myList.add(map);
+        //myList = new ArrayList<HashMap<String, Object>>();
+        //for(int i=0;i<3;i++)
+        //{
+        //    HashMap<String, Object> map = new HashMap<String, Object>();
+        //    map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
+        //    map.put("ItemText", "NO."+String.valueOf(i));
+        //    myList.add(map);
+        //}
+
+        //init data for album
+        parser.addAlbum("0000","Name4");
+        parser.addAlbum("0000","Name5");
+        parser.addAlbum("0000","Name6");
+
+        ArrayList<String> albumNames = parser.getListAlbum("0000",0);
+        if(albumNames != null){
+            for(int i=0;i<albumNames.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("ItemImage", R.drawable.ic_local_see_black_24dp);
+                map.put("ItemText",albumNames.get(i));
+                myList.add(map);
+            }
         }
 
         //set listener
@@ -180,6 +203,7 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         ArrayList<HashMap<String, Object>> newList = new ArrayList<HashMap<String, Object>>();
         if (isShowDelete) {
             myList.remove(position);
+
             isShowDelete = false;
         }
         newList.addAll(myList);
