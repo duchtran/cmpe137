@@ -1,5 +1,7 @@
 package com.aitruong.elbrus;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -70,11 +72,11 @@ public class PhotoCreateActivity extends AppCompatActivity {
 
     final PhotoCreateActivity thisActivity = this;
     private Data data;
-
-
+    private Bitmap image;
+    private Button btn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_create);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,16 +86,15 @@ public class PhotoCreateActivity extends AppCompatActivity {
 
         final EditText name = (EditText) findViewById(R.id.photoCreate_edit_name);
         final EditText note = (EditText) findViewById(R.id.photoCreate_edit_note);
+        Button btn = (Button) findViewById(R.id.choose_photo);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<String> beforePhotoNames = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(),data.getCurrentAlbumID());
                 boolean result = data.getParser().addPhoto(data.getUserID(),
-                        data.getCurrentAlbumID(), name.getText().toString(), getResources(),
-                        R.drawable.facebook_invite, note.getText().toString());
-                ArrayList<String> afterPhotoNames = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(), data.getCurrentAlbumID());
+                        data.getCurrentAlbumID(), name.getText().toString(), image,
+                         note.getText().toString());
                 if(result){
                     Snackbar.make(view, "Create Photo Success!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -108,4 +109,27 @@ public class PhotoCreateActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public void choosePhoto(View tager){
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, 0x3001);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x3001 && resultCode == RESULT_OK && null != data) {
+            try {
+                Uri originalUri = data.getData();
+                ContentResolver resolver = getContentResolver();
+                image = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+                //String[] proj = {MediaStore.Images.Media.DATA};
+                //Cursor cursor = managedQuery(originalUri, proj, null, null, null);
+                //int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                //cursor.moveToFirst();
+                //String path = cursor.getString(column_index);
+                //btn.setText(btn.getText().toString() + "(selected)");
+            }catch (IOException e) {
+            }
+        }
+    }
 }
