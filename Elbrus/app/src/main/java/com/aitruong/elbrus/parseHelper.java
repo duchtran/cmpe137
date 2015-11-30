@@ -1,4 +1,4 @@
-package com.aitruong.elbrus;
+package com.duchongtrangmail.project137;
 
 /**
  * Created by ductran on 11/24/15.
@@ -21,7 +21,7 @@ import java.util.List;
 public class parseHelper extends Activity{
 
     public boolean addUser(String username, String password) {
-        // add a user to parse cloud given username and password, log the result to Log.d tag DATA
+    // add a user to parse cloud given username and password, log the result to Log.d tag DATA
         try {
             final ParseObject user = new ParseObject("Users");
             user.put("username", username);
@@ -43,7 +43,7 @@ public class parseHelper extends Activity{
     }
 
     public String getUID (String username, String password) {
-        // return user id given username and password, return null if cannot find
+    // return user id given username and password, return null if cannot find
 
         ParseQuery query = new ParseQuery("Users");
         query.whereEqualTo("username", username);
@@ -60,7 +60,7 @@ public class parseHelper extends Activity{
     }
 
     public boolean addAlbum(String UID, String AlbumName, String Description) {
-        // add an album to parse given user id, album name, and description, log result to Log.d tag ALBUM
+    // add an album to parse given user id, album name, and description, log result to Log.d tag ALBUM
         try {
             ParseObject album = new ParseObject("Albums");
             album.put("UID", UID);
@@ -84,7 +84,7 @@ public class parseHelper extends Activity{
     }
 
     public String getAID(String UID, String AlbumName) {
-        // return album id given user id and album name, return null if cannot find
+    // return album id given user id and album name, return null if cannot find
 
         ParseQuery query = new ParseQuery("Albums");
         query.whereEqualTo("UID", UID);
@@ -100,12 +100,12 @@ public class parseHelper extends Activity{
         }
     }
     public boolean addPhoto(String UID, String AID, String PhotoName, Resources res, int pic, String note) {
-        // Upload a photo onto parse
-        // For now, I can only allow upload from drawable folder in android
-        // Resource res is found activity class, using command:
-        //      Resources res = getResources();
-        // pic is found in activity class, using command:
-        //      int pic = R.drawable.<name>;
+    // Upload a photo onto parse
+    // For now, I can only allow upload from drawable folder in android
+    // Resource res is found activity class, using command:
+    //      Resources res = getResources();
+    // pic is found in activity class, using command:
+    //      int pic = R.drawable.<name>;
         try {
             Bitmap bitmap = BitmapFactory.decodeResource(res, pic);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -132,42 +132,10 @@ public class parseHelper extends Activity{
         }
     }
 
-    public boolean addPhoto(String UID, String AID, String PhotoName, Bitmap bitmap, String note) {
-        // Upload a photo onto parse
-        // For now, I can only allow upload from drawable folder in android
-        // Resource res is found activity class, using command:
-        //      Resources res = getResources();
-        // pic is found in activity class, using command:
-        //      int pic = R.drawable.<name>;
-        try {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] image = stream.toByteArray();
-            ParseFile file = new ParseFile(PhotoName, image);
-            try {
-                file.save();
-            } catch (Exception e) {
-                System.out.println("cannot save file");
-                return false;
-            }
-            ParseObject photo = new ParseObject("Photos");
-            photo.put("UID", UID);
-            photo.put("AID", AID);
-            photo.put("PhotoName", PhotoName);
-            photo.put("Note", note);
-            photo.put("File", file);
-            photo.saveInBackground();
-            return true;
-        }
-        catch (Exception e) {
-            return false;
-        }
-    }
-
     public ArrayList<String> getListAlbum(String UID, int type) {
-        //  return the list from Album table, type determine what column to get
-        //  type = 0: Name
-        //  type = 1: Description
+    //  return the list from Album table, type determine what column to get
+    //  type = 0: Name
+    //  type = 1: Description
 
         try {
             ParseQuery<ParseObject> query = new ParseQuery<>("Albums");
@@ -198,7 +166,7 @@ public class parseHelper extends Activity{
     }
 
     public String getPID(String UID, String AID, String PhotoName) {
-        // return photo id given user id, aid, and photo name, return null if cannot find
+    // return photo id given user id, aid, and photo name, return null if cannot find
         ParseQuery query = new ParseQuery("Photos");
         query.whereEqualTo("UID", UID);
         query.whereEqualTo("AID", AID);
@@ -215,7 +183,7 @@ public class parseHelper extends Activity{
     }
 
     public String getFID(String UID, String Name) {
-        // return friend id given user id and friend's name, return null if cannot find
+    // return friend id given user id and friend's name, return null if cannot find
 
         ParseQuery query = new ParseQuery("Friend");
         query.whereEqualTo("UID", UID);
@@ -243,8 +211,8 @@ public class parseHelper extends Activity{
 
 
     public ArrayList<Bitmap> getListPhotoFiles(String UID, String AID) {
-        //  return the list of photo file that match UID and AID in bitmap format
-        //  to display on view, use .setImageBitmap(Bitmap bmp) from ImageView
+    //  return the list of photo file that match UID and AID in bitmap format
+    //  to display on view, use .setImageBitmap(Bitmap bmp) from ImageView
 
         try {
             ParseQuery<ParseObject> query = new ParseQuery<>("Photos");
@@ -268,8 +236,8 @@ public class parseHelper extends Activity{
     }
 
     public Bitmap getSpecificPhotoFile(String UID, String AID, String PhotoName) {
-        //  return the specific photo file that match UID, AID, and PhotoName in bitmap format
-        //  to display on view, use .setImageBitmap(Bitmap bmp) from ImageView
+    //  return the specific photo file that match UID, AID, and PhotoName in bitmap format
+    //  to display on view, use .setImageBitmap(Bitmap bmp) from ImageView
 
         try {
             ParseQuery query = new ParseQuery("Photos");
@@ -287,7 +255,7 @@ public class parseHelper extends Activity{
     }
 
     public boolean addFriend(String UID, String Name) {
-        //  add a friend name on to parse server given the UID
+    //  add a friend name on to parse server given the UID
         try {
             ParseObject friend = new ParseObject("Friend");
             friend.put("UID", UID);
@@ -311,7 +279,7 @@ public class parseHelper extends Activity{
 
 
     public ArrayList<String> getListFriendNames(String UID) {
-        //  return the list of Friends’ names given the UID
+    //  return the list of Friends’ names given the UID
 
         try {
             ParseQuery<ParseObject> query = new ParseQuery<>("Friend");
@@ -331,7 +299,7 @@ public class parseHelper extends Activity{
     }
 
     public ArrayList<String> getListPhotoNamesFromUser(String UID) {
-        //  return the list of photo names given the UID, regardless of Album (AID)
+    //  return the list of photo names given the UID, regardless of Album (AID)
 
         try {
             ParseQuery<ParseObject> query = new ParseQuery<>("Photos");
@@ -351,7 +319,7 @@ public class parseHelper extends Activity{
     }
 
     public ArrayList<String> getListPhotoNamesFromUser_Album(String UID, String AID) {
-        //  return the list of photo names that matches UID and AID
+    //  return the list of photo names that matches UID and AID
 
         try {
             ParseQuery<ParseObject> query = new ParseQuery<>("Photos");
@@ -372,7 +340,7 @@ public class parseHelper extends Activity{
     }
 
     public String getPhotoNote(String PID ) {
-        //  return the note of a photo given the photo id, return null if cannot find
+    //  return the note of a photo given the photo id, return null if cannot find
         try {
             ParseQuery query = new ParseQuery("Photos");
             query.whereEqualTo("objectId", PID);
@@ -381,6 +349,49 @@ public class parseHelper extends Activity{
             Note = object.getString("Note");
             return Note;
         } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    public boolean addComment(String PID, String Comment) {
+        // add an album to parse given user id, album name, and description, log result to Log.d tag ALBUM
+        try {
+            ParseObject album = new ParseObject("Comments");
+            album.put("PID", PID);
+            album.put("Comment", Comment);
+            album.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("COMMENT", "Add comment Successfully");
+                    } else {
+                        Log.d("COMMENT", "Cannot add comment to picture");
+                    }
+                }
+            });
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public ArrayList<String> getComments(String PID) {
+        //  return the list of photo Comments given the PID
+
+        try {
+            ParseQuery<ParseObject> query = new ParseQuery<>("Comments");
+            query.whereEqualTo("PID", PID);
+            List<ParseObject> objectList = query.find();
+            ArrayList<String> list = new ArrayList<>();
+            for (int i = 0; i < objectList.size(); i++) {
+                list.add(objectList.get(i).getString("Comment"));
+            }
+            Log.d("COMMENT", "Successfully get list of Comments");
+            return list;
+        }
+        catch (ParseException e) {
+            Log.d("Comments", "Cannot get list");
             return null;
         }
     }
