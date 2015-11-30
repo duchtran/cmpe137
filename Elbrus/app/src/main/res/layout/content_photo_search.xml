@@ -10,4 +10,59 @@
     tools:showIn="@layout/activity_photo_search"
     tools:context="com.aitruong.elbrus.PhotoSearchActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Photo Name:"
+        android:id="@+id/tvPname"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Album Name:"
+        android:id="@+id/tvAname"
+        android:layout_below="@+id/tvPname"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etPname"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvAname"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etAname"
+        android:layout_alignBottom="@+id/tvAname"
+        android:layout_toRightOf="@+id/tvAname"
+        android:layout_alignRight="@+id/etPname"
+        android:layout_alignEnd="@+id/etPname" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/bSearch"
+        android:layout_below="@+id/tvAname"
+        android:layout_centerHorizontal="true"
+        android:onClick="onSearchClick" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/ivImage"
+        android:layout_below="@+id/bSearch"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
