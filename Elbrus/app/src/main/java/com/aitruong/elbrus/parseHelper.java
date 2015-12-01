@@ -1,4 +1,4 @@
-package com.duchongtrangmail.project137;
+package com.aitruong.elbrus;
 
 /**
  * Created by ductran on 11/24/15.
@@ -99,15 +99,14 @@ public class parseHelper extends Activity{
             return null;
         }
     }
-    public boolean addPhoto(String UID, String AID, String PhotoName, Resources res, int pic, String note) {
-    // Upload a photo onto parse
-    // For now, I can only allow upload from drawable folder in android
-    // Resource res is found activity class, using command:
-    //      Resources res = getResources();
-    // pic is found in activity class, using command:
-    //      int pic = R.drawable.<name>;
+    public boolean addPhoto(String UID, String AID, String PhotoName, Bitmap bitmap, String note) {
+        // Upload a photo onto parse
+        // For now, I can only allow upload from drawable folder in android
+        // Resource res is found activity class, using command:
+        //      Resources res = getResources();
+        // pic is found in activity class, using command:
+        //      int pic = R.drawable.<name>;
         try {
-            Bitmap bitmap = BitmapFactory.decodeResource(res, pic);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] image = stream.toByteArray();
