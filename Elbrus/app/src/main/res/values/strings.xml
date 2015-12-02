@@ -19,4 +19,5 @@
     <string name="title_activity_photo_search">Search Photos</string>
     <string name="action_photo_refresh">Refresh</string>
     <string name="action_album_refresh">Refresh</string>
+    <string name="share_my_photo">Share my Photo</string>
 </resources>
