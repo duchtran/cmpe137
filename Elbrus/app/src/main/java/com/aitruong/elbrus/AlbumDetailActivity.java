@@ -2,6 +2,7 @@ package com.aitruong.elbrus;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
     private ArrayList<HashMap<String, Object>> myList = new ArrayList<HashMap<String, Object>>();
 
     ArrayList<String> photoNames;
+    ArrayList<Bitmap> photoImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +139,11 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
     private void refreshList(){
         myList = new ArrayList<HashMap<String, Object>>();
         photoNames = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(),data.getCurrentAlbumID());
+        photoImages = data.getParser().getListPhotoFiles(data.getUserID(),data.getCurrentAlbumID());
         if(photoNames != null){
             for(int i=0;i<photoNames.size();i++){
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("ItemImage", R.drawable.ic_photo_black_24dp);
+                map.put("ItemImage", photoImages.get(i));
                 map.put("ItemText",photoNames.get(i));
                 myList.add(map);
             }

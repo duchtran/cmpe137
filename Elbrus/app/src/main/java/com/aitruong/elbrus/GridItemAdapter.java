@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,15 @@ public class GridItemAdapter extends BaseAdapter {
         name_tv = (TextView) convertView.findViewById(R.id.ItemText);
         deleteView = convertView.findViewById(R.id.delete_markView);
         deleteView.setVisibility(isShowDelete ? View.VISIBLE : View.GONE);
-        img.setBackgroundResource((int)myList.get(position).get("ItemImage"));
+        if(Bitmap.class.isInstance(myList.get(position).get("ItemImage"))){
+            img.setImageBitmap((Bitmap) myList.get(position).get("ItemImage"));
+        }
+        else if(Integer.class.isInstance(myList.get(position).get("ItemImage"))){
+            img.setBackgroundResource((int)myList.get(position).get("ItemImage"));
+        }
+        else{
+            img.setBackgroundResource(R.drawable.ic_local_see_black_24dp);
+        }
         name_tv.setText(myList.get(position).get("ItemText").toString());
         return convertView;
     }

@@ -43,16 +43,6 @@ public class PhotoDetailActivity extends AppCompatActivity {
         Bitmap bmp =  data.getParser().getSpecificPhotoFile(data.getUserID(), data.getCurrentAlbumID(), data.getCurrentPhotoName());
 
         if(bmp!=null){
-            //decode image
-            //BitmapFactory.Options options = new BitmapFactory.Options();
-            //options.inJustDecodeBounds = true;
-            //ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            //bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            //InputStream is = new ByteArrayInputStream(baos.toByteArray());
-            //BitmapFactory.decodeStream(is,null,options);
-            //options.inSampleSize = calculateInSampleSize(options, image.getWidth(), image.getHeight());
-            //options.inJustDecodeBounds = false;
-            //Bitmap finalBmp = BitmapFactory.decodeStream(is,null,options);
             image.setImageBitmap(bmp);
         }
 
