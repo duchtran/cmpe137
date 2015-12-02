@@ -92,18 +92,23 @@ public class PhotoCreateActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean result = data.getParser().addPhoto(data.getUserID(),
-                        data.getCurrentAlbumID(), name.getText().toString(), image,
-                         note.getText().toString());
-                if(result){
-                    Snackbar.make(view, "Create Photo Success!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                if(name.getText().toString().length()>0&&image!=null) {
+                    boolean result = data.getParser().addPhoto(data.getUserID(),
+                            data.getCurrentAlbumID(), name.getText().toString(), image,
+                            note.getText().toString());
+                    if (result) {
+                        Snackbar.make(view, "Create Photo Success!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else {
+                        Snackbar.make(view, "Create Photo Fail!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                    thisActivity.finish();
                 }
                 else{
-                    Snackbar.make(view, "Create Photo Fail!", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Uncomplete data!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-                thisActivity.finish();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

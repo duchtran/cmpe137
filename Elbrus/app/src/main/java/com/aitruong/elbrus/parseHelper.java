@@ -131,38 +131,6 @@ public class parseHelper extends Activity{
         }
     }
 
-    public boolean addPhoto(String UID, String AID, String PhotoName, Bitmap bitmap, String note) {
-        // Upload a photo onto parse
-        // For now, I can only allow upload from drawable folder in android
-        // Resource res is found activity class, using command:
-        //      Resources res = getResources();
-        // pic is found in activity class, using command:
-        //      int pic = R.drawable.<name>;
-        try {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] image = stream.toByteArray();
-            ParseFile file = new ParseFile(PhotoName, image);
-            try {
-                file.save();
-            } catch (Exception e) {
-                System.out.println("cannot save file");
-                return false;
-            }
-            ParseObject photo = new ParseObject("Photos");
-            photo.put("UID", UID);
-            photo.put("AID", AID);
-            photo.put("PhotoName", PhotoName);
-            photo.put("Note", note);
-            photo.put("File", file);
-            photo.saveInBackground();
-            return true;
-        }
-        catch (Exception e) {
-            return false;
-        }
-    }
-
     public ArrayList<String> getListAlbum(String UID, int type) {
     //  return the list from Album table, type determine what column to get
     //  type = 0: Name

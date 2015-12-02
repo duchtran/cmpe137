@@ -9,14 +9,14 @@
     <string name="action_share">Share</string>
     <string name="action_create_album">CreateAlbum</string>
     <string name="action_create_photo">CreatePhoto</string>
-    <string name="title_activity_album">AlbumActivity</string>
-    <string name="title_activity_album_create">AlbumCreateActivity</string>
-    <string name="title_activity_album_detail">AlbumDetailActivity</string>
-    <string name="title_activity_album_share">AlbumShareActivity</string>
-    <string name="title_activity_invite">InviteActivity</string>
-    <string name="title_activity_photo_create">PhotoCreateActivity</string>
-    <string name="title_activity_photo_detail">PhotoDetailActivity</string>
-    <string name="title_activity_photo_search">PhotoSearchActivity</string>
+    <string name="title_activity_album">Album Overview</string>
+    <string name="title_activity_album_create">Create a Album</string>
+    <string name="title_activity_album_detail">Album Detail</string>
+    <string name="title_activity_album_share">Share a Album</string>
+    <string name="title_activity_invite">Invite Friends</string>
+    <string name="title_activity_photo_create">Create a Photo</string>
+    <string name="title_activity_photo_detail">Photo Detail</string>
+    <string name="title_activity_photo_search">Search Photos</string>
     <string name="action_photo_refresh">Refresh</string>
     <string name="action_album_refresh">Refresh</string>
 </resources>

@@ -30,16 +30,21 @@ public class AlbumCreateActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean result = data.getParser().addAlbum(data.getUserID(), title.getText().toString(), description.getText().toString());
-                if(result){
-                    Snackbar.make(view, "Create Album Success!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                if(title.getText().toString().length()>0) {
+                    boolean result = data.getParser().addAlbum(data.getUserID(), title.getText().toString(), description.getText().toString());
+                    if (result) {
+                        Snackbar.make(view, "Create Album Success!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    } else {
+                        Snackbar.make(view, "Create Album Fail!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                    thisActivity.finish();
                 }
                 else{
-                    Snackbar.make(view, "Create Album Fail!", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "No title!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-                thisActivity.finish();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
