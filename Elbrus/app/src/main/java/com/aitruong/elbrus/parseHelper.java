@@ -394,4 +394,20 @@ public class parseHelper extends Activity{
             return null;
         }
     }
+
+    public String getPhotoUrl(String UID, String AID, String PhotoName) {
+        //  return the specific photo url that match UID, AID, and PhotoName in String format
+
+        try {
+            ParseQuery query = new ParseQuery("Photos");
+            query.whereEqualTo("UID", UID);
+            query.whereEqualTo("AID", AID);
+            query.whereEqualTo("PhotoName", PhotoName);
+            ParseFile file = query.getFirst().getParseFile("File");
+            return file.getUrl();
+        }
+        catch (ParseException e) {
+            return null;
+        }
+    }
 }
