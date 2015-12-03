@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import android.widget.EditText;
 
 public class AlbumDetailActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
 
@@ -31,6 +32,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
     private GridItemAdapter mAdapter;
     private boolean isShowDelete = false;
     private ArrayList<HashMap<String, Object>> myList = new ArrayList<HashMap<String, Object>>();
+
 
     ArrayList<String> photoNames;
     ArrayList<Bitmap> photoImages;
@@ -56,6 +58,8 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
 
         mGridView.setOnItemClickListener(this);
         mGridView.setOnItemLongClickListener(this);
+
+
 
         refreshList();
 

@@ -1,27 +1,29 @@
 package com.aitruong.elbrus;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.util.ArrayList;
+
+import android.widget.Button;
 
 public class PhotoDetailActivity extends AppCompatActivity {
 
     private Data data;
     ImageView image;
+    EditText leaveCommentEditText;
+    TextView leaveCommentTextView;
+    Button addCommentButton;
+
+//    TextView listOfCommentTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +48,38 @@ public class PhotoDetailActivity extends AppCompatActivity {
             image.setImageBitmap(bmp);
         }
 
+        leaveCommentEditText=(EditText)findViewById(R.id.photo_comment);
+        final String comment = leaveCommentEditText.getText().toString();
+        leaveCommentTextView = (TextView)findViewById(R.id.list_of_comments);
+        leaveCommentTextView.setText(comment);
 
+        addCommentButton = (Button)findViewById(R.id.add_comment_button);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        addCommentButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View view){
+                boolean isCommentAdd = data.getParser().addComment(data.getCurrentPhotoID(),comment);
+                leaveCommentEditText.setText("");
+                ArrayList<String> listCommendArray=data.getParser().getComments(data.getCurrentPhotoID());
+                leaveCommentTextView.setText(comment);
+
+
+
+
+//
+
             }
+
         });
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
