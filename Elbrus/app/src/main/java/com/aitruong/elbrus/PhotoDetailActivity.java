@@ -68,24 +68,9 @@ public class PhotoDetailActivity extends AppCompatActivity {
                     listString+="\n";
                 }
                 leaveCommentTextView.setText(listString);
-
-
-
-
-//
-
             }
 
         });
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -110,5 +95,15 @@ public class PhotoDetailActivity extends AppCompatActivity {
         }
 
         return inSampleSize;
+    }
+
+    public void refresh(View v){
+        ArrayList<String> listCommendArray=data.getParser().getComments(data.getCurrentPhotoID());
+        String listString = new String();
+        for(int i=0;i<listCommendArray.size();i++){
+            listString+=listCommendArray.get(i);
+            listString+="\n";
+        }
+        leaveCommentTextView.setText(listString);
     }
 }

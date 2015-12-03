@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import android.widget.EditText;
 
 public class AlbumDetailActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener{
@@ -101,8 +103,21 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
     }
 
     public void openShare(){
-        Intent intent = new Intent(this,AlbumShareActivity.class);
-        startActivity(intent);
+        String url = new String();
+
+        data = (Data)getApplication();
+        List<String> photosName = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(),data.getCurrentAlbumID());
+
+        for(int i=0;i<photosName.size();i++){
+            url+=data.getParser().getPhotoUrl(data.getUserID(),data.getCurrentAlbumID(),photosName.get(i));
+            url+="\n";
+        }
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_my_photo)));
     }
 
     @Override

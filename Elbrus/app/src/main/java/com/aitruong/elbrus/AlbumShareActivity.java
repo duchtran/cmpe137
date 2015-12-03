@@ -21,22 +21,7 @@ public class AlbumShareActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_share);
 
-        String url = new String();
 
-        data = (Data)getApplication();
-        List<String> photosName = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(),data.getCurrentAlbumID());
-
-        for(int i=0;i<photosName.size();i++){
-            url+=data.getParser().getPhotoUrl(data.getUserID(),data.getCurrentAlbumID(),photosName.get(i));
-            url+="\n";
-        }
-        //data.getParser().getPhotoUrl(data.getUserID(),data.getCurrentAlbumID(),photosName.get(i));
-
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, url);
-        sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_my_photo)));
 
 
 
