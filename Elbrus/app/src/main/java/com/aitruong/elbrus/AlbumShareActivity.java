@@ -8,16 +8,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.content.Intent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AlbumShareActivity extends AppCompatActivity {
+
+    private Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album_share);
+
+        String url = new String();
+
+        data = (Data)getApplication();
+        List<String> photosName = data.getParser().getListPhotoNamesFromUser_Album(data.getUserID(),data.getCurrentAlbumID());
+
+        for(int i=0;i<photosName.size();i++){
+            url+=data.getParser().getPhotoUrl(data.getUserID(),data.getCurrentAlbumID(),photosName.get(i));
+            url+="\n";
+        }
+        //data.getParser().getPhotoUrl(data.getUserID(),data.getCurrentAlbumID(),photosName.get(i));
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hello friend, I want to share my photos with you");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, url);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_my_photo)));
 
