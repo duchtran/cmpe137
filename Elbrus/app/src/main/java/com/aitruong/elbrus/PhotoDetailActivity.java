@@ -49,7 +49,7 @@ public class PhotoDetailActivity extends AppCompatActivity {
         }
 
         leaveCommentEditText=(EditText)findViewById(R.id.photo_comment);
-        final String comment = leaveCommentEditText.getText().toString();
+        final String comment = new String();
         leaveCommentTextView = (TextView)findViewById(R.id.list_of_comments);
         leaveCommentTextView.setText(comment);
 
@@ -58,10 +58,16 @@ public class PhotoDetailActivity extends AppCompatActivity {
         addCommentButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                boolean isCommentAdd = data.getParser().addComment(data.getCurrentPhotoID(),comment);
+                String newComment = leaveCommentEditText.getText().toString();
+                boolean isCommentAdd = data.getParser().addComment(data.getCurrentPhotoID(),newComment);
                 leaveCommentEditText.setText("");
                 ArrayList<String> listCommendArray=data.getParser().getComments(data.getCurrentPhotoID());
-                leaveCommentTextView.setText(comment);
+                String listString = new String();
+                for(int i=0;i<listCommendArray.size();i++){
+                    listString+=listCommendArray.get(i);
+                    listString+="\n";
+                }
+                leaveCommentTextView.setText(listString);
 
 
 

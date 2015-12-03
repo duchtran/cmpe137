@@ -85,6 +85,9 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
             case R.id.action_create_photo:
                 openCreatePhoto();
                 return true;
+            case R.id.action_share:
+                openShare();
+                return true;
             case R.id.action_photo_refresh:
                 refreshList();
                 return true;
@@ -94,6 +97,11 @@ public class AlbumDetailActivity extends AppCompatActivity implements AdapterVie
     }
     public void openCreatePhoto(){
         Intent intent = new Intent(this,PhotoCreateActivity.class);
+        startActivity(intent);
+    }
+
+    public void openShare(){
+        Intent intent = new Intent(this,AlbumShareActivity.class);
         startActivity(intent);
     }
 

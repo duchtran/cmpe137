@@ -6,6 +6,12 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/action_create_photo"
         android:showAsAction="always"></item>
+    <item android:id="@+id/action_share"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/action_share"
+        android:actionProviderClass=
+            "android.widget.ShareActionProvider"
+        android:showAsAction="withText"></item>
     <item android:id="@+id/action_photo_refresh"
         android:icon="@android:drawable/ic_menu_upload"
         android:title="@string/action_photo_refresh"

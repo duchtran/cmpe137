@@ -98,9 +98,7 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
             case R.id.action_invite:
                 openInvite();
                 return true;
-            case R.id.action_share:
-                openShare();
-                return true;
+
             case R.id.action_album_refresh:
                 refreshList();
                 return true;
@@ -124,10 +122,7 @@ public class AlbumActivity extends AppCompatActivity implements AdapterView.OnIt
         startActivity(intent);
     }
 
-    public void openShare(){
-        Intent intent = new Intent(this,AlbumShareActivity.class);
-        startActivity(intent);
-    }
+
 
     @Override
     public void onItemClick(AdapterView<?> arg0,

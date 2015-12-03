@@ -14,12 +14,7 @@
         android:icon="@android:drawable/ic_menu_report_image"
         android:title="@string/action_invite"
         android:showAsAction="withText"></item>
-    <item android:id="@+id/action_share"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/action_share"
-        android:actionProviderClass=
-            "android.widget.ShareActionProvider"
-        android:showAsAction="withText"></item>
+
     <item android:id="@+id/action_album_refresh"
         android:icon="@android:drawable/ic_menu_upload"
         android:title="@string/action_album_refresh"
